@@ -1,0 +1,84 @@
+{
+  "name": "@cezembre/admin",
+  "author": "Lucien Perouze",
+  "version": "0.1.1",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "keywords": [
+    "react",
+    "admin",
+    "cezembre"
+  ],
+  "files": [
+    "lib"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "build-scripts": "tsc --build",
+    "build-styles": "sass --load-path=node_modules/ ./src/style.scss ./lib/style.css && cp -r src/styles lib/ && cp src/style.scss lib/",
+    "build": "npm run build-scripts && npm run build-styles",
+    "watch": "nodemon --watch src -e ts,tsx,scss --exec 'npm run build'",
+    "test": "echo 'No tests written",
+    "lint": "eslint",
+    "prepare": "npm run lint && npm run build",
+    "release": "release-it"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "@cezembre/forms": ">=1.5.3",
+    "@cezembre/ui": ">=0.1.6",
+    "react-router-dom": ">=5.2.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "eslint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "devDependencies": {
+    "@cezembre/forms": "^1.5.3",
+    "@cezembre/ui": "^0.1.6",
+    "@release-it/conventional-changelog": "^2.0.1",
+    "@types/lodash.isequal": "^4.5.5",
+    "@types/luxon": "^1.26.4",
+    "@types/react": "^17.0.3",
+    "@types/react-router-dom": "^5.1.7",
+    "@types/sass": "^1.16.0",
+    "@types/validator": "^13.1.3",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "dart-sass": "^1.25.0",
+    "eslint": "^7.25.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-airbnb-typescript": "^8.0.2",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-config-react-app": "^5.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.0.2",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.2",
+    "eslint-plugin-react-hooks": "^3.0.0",
+    "husky": "^5.1.3",
+    "luxon": "^1.26.0",
+    "nodemon": "^2.0.7",
+    "prettier": "2.0.5",
+    "release-it": "^14.2.2",
+    "sass": "^1.32.11",
+    "sass-loader": "^11.0.1",
+    "size-limit": "^4.10.1",
+    "ts-loader": "^9.1.1",
+    "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "validator": "^13.6.0"
+  }
+}
