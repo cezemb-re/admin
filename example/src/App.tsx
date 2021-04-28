@@ -1,7 +1,31 @@
 import React, { ReactElement } from 'react';
 import Admin from '@cezembre/admin';
 import './App.scss';
-import { IconName } from '@cezembre/ui';
+import { Button, IconName, Table } from '@cezembre/ui';
+
+interface Article {
+  id: string;
+  title: string;
+  description: string;
+}
+
+const articles: Article[] = [
+  {
+    id: '1',
+    title: 'Oui',
+    description: 'Voici un article',
+  },
+  {
+    id: '2',
+    title: 'Ceci est un article',
+    description: 'Oui comme ça',
+  },
+  {
+    id: '3',
+    title: 'Ok',
+    description: 'Hell World!',
+  },
+];
 
 export default function App(): ReactElement {
   return (
@@ -12,7 +36,17 @@ export default function App(): ReactElement {
           { label: 'Accueil', to: '/' },
           { label: 'Users', to: '/users', icon: IconName.USER },
         ]}>
-        <h1>Hello there</h1>
+        <div>
+          <Button>Nouvel article</Button>
+        </div>
+
+        <Table<Article>
+          columns={[
+            { key: 'title', title: 'Titre' },
+            { key: 'description', title: 'Description' },
+          ]}
+          data={articles}
+        />
       </Admin>
     </div>
   );

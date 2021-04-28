@@ -13,7 +13,7 @@
     padding: 20px;
 
     > h1 {
-      @include JetBrainsMono(1em);
+      @include JetBrainsMono(.9em);
       margin-left: 15px;
     }
 
