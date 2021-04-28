@@ -1,5 +1,5 @@
-import Auth from './forms/auth';
-import Side from './menus/side';
+import Auth, { Credentials } from './forms/auth';
+import Side, { SideLink } from './menus/side';
 import Admin from './admin';
 
 /**
@@ -7,12 +7,16 @@ import Admin from './admin';
  */
 export { Auth };
 
+export type { Credentials };
+
 /**
  * Menus
  */
 export { Side };
 
+export type { SideLink };
+
 /**
- * Menus
+ * Admin
  */
 export default Admin;
