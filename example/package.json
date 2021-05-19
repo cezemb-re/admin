@@ -22,7 +22,7 @@
   "dependencies": {
     "@cezembre/admin": "file:../",
     "@cezembre/forms": "^1.5.3",
-    "@cezembre/ui": "^0.1.8",
+    "@cezembre/ui": "^0.1.15",
     "axios": "^0.19.2",
     "luxon": "^1.26.0",
     "node-sass": "^4.14.1",

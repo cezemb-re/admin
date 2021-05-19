@@ -8,6 +8,12 @@
     }
   }
 
+  > .error {
+    @include JetBrainsMono(.9em, $color-error);
+    text-align: center;
+    margin-top: 20px;
+  }
+
   > .submit {
     margin-top: 30px;
   }

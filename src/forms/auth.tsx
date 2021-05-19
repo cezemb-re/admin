@@ -1,5 +1,11 @@
-import React, { ReactElement, useCallback } from 'react';
-import { Field, Form, FormErrors } from '@cezembre/forms';
+import React, { ReactElement, useCallback, useState } from 'react';
+import {
+  Field,
+  Form,
+  FormErrors,
+  FormState,
+  getDefaultFormState,
+} from '@cezembre/forms';
 import validator from 'validator';
 import { Input, Button } from '@cezembre/ui';
 
@@ -13,8 +19,18 @@ export interface Props {
 }
 
 export default function Auth({
-  onCredentialSignIn = () => undefined,
+  onCredentialSignIn = undefined,
 }: Props): ReactElement {
+  const [formState, setFormState] = useState<FormState<Credentials>>(
+    getDefaultFormState<Credentials>()
+  );
+
+  const form = useCallback((formContext) => {
+    if (formContext) {
+      setFormState(formContext.formState);
+    }
+  }, []);
+
   const validate = useCallback((credentials: Credentials): FormErrors<
     Credentials
   > => {
@@ -39,7 +55,8 @@ export default function Auth({
         <h1>Administration</h1>
         <p>Espace réservé</p>
 
-        <Form
+        <Form<Credentials>
+          ref={form}
           onSubmit={onCredentialSignIn}
           validate={validate}
           className="cezembre-admin-form credentials"
@@ -68,6 +85,8 @@ export default function Auth({
           <div className="submit">
             <Button type="submit">Me connecter</Button>
           </div>
+
+          {formState.error ? <p className="error">{formState.error}</p> : null}
         </Form>
       </div>
 

@@ -31,7 +31,7 @@ export default function App(): ReactElement {
   return (
     <div className="App">
       <Admin
-        authenticated
+        authenticated={false}
         links={[
           { label: 'Accueil', to: '/' },
           { label: 'Users', to: '/users', icon: IconName.USER },
