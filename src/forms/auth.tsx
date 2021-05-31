@@ -59,7 +59,7 @@ export default function Auth({
           ref={form}
           onSubmit={onCredentialSignIn}
           validate={validate}
-          className="cezembre-admin-form credentials"
+          className="cezembre-ui-form credentials"
         >
           <div className="field">
             <Field
