@@ -35,8 +35,8 @@ export default function Admin({
   >(namespaces);
 
   const [currentBackButton, setCurrentBackButton] = useState<
-    ((event: MouseEvent<HTMLButtonElement>) => Promise<void> | void) | undefined
-  >(() => backButton);
+    boolean | undefined
+  >(backButton);
   const [currentTitle, setCurrentTitle] = useState<string | undefined>(title);
   const [currentSections, setCurrentSections] = useState<Section[] | undefined>(
     sections

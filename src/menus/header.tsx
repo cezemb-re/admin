@@ -1,5 +1,6 @@
-import React, { MouseEvent, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { Button, IconName } from '@cezembre/ui';
+import { useHistory } from 'react-router-dom';
 
 export interface Section {
   label: string;
@@ -7,7 +8,7 @@ export interface Section {
 }
 
 export interface Props {
-  backButton?: (event: MouseEvent<HTMLButtonElement>) => Promise<void> | void;
+  backButton?: boolean;
   title?: string;
   sections?: Section[];
 }
@@ -17,6 +18,8 @@ export default function Header({
   title,
   sections,
 }: Props): ReactElement {
+  const history = useHistory();
+
   return (
     <div className="cezembre-admin-menus-header">
       <div className="general" />
@@ -27,7 +30,7 @@ export default function Header({
             buttonStyle="link"
             leftIcon={IconName.ARROW}
             leftIconRotation={180}
-            onClick={backButton}
+            onClick={history.goBack}
           >
             Retour
           </Button>

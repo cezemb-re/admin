@@ -13,16 +13,9 @@ export interface AdminContext {
   initialNamespaces?: Namespace[];
   namespaces?: Namespace[];
   setNamespaces: Dispatch<SetStateAction<Namespace[] | undefined>>;
-  initialBackButton?: (
-    event: MouseEvent<HTMLButtonElement>
-  ) => Promise<void> | void;
-  backButton?: (event: MouseEvent<HTMLButtonElement>) => Promise<void> | void;
-  setBackButton: Dispatch<
-    SetStateAction<
-      | ((event: MouseEvent<HTMLButtonElement>) => Promise<void> | void)
-      | undefined
-    >
-  >;
+  initialBackButton?: boolean;
+  backButton?: boolean;
+  setBackButton: Dispatch<SetStateAction<boolean | undefined>>;
   initialTitle?: string;
   title?: string;
   setTitle: Dispatch<SetStateAction<string | undefined>>;
@@ -64,15 +57,11 @@ export function useNamespaces(namespaces: Namespace[] | undefined): void {
   }, [initialNamespaces, namespaces, setNamespaces]);
 }
 
-export function useBackButton(
-  backButton:
-    | ((event: MouseEvent<HTMLButtonElement>) => Promise<void> | void)
-    | undefined
-): void {
+export function useBackButton(backButton: boolean | undefined): void {
   const { initialBackButton, setBackButton } = useAdminContext();
   useEffect(() => {
-    setBackButton(() => backButton);
-    return () => setBackButton(() => initialBackButton);
+    setBackButton(backButton);
+    return () => setBackButton(initialBackButton);
   }, [backButton, initialBackButton, setBackButton]);
 }
 
