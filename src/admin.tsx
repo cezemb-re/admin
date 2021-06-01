@@ -1,10 +1,4 @@
-import React, {
-  MouseEvent,
-  ReactElement,
-  ReactNode,
-  useEffect,
-  useState,
-} from 'react';
+import React, { ReactElement, ReactNode, useEffect, useState } from 'react';
 import Auth, { Props as AuthProps } from './forms/auth';
 import Namespaces, {
   Props as NamespacesProps,
@@ -23,7 +17,7 @@ export default function Admin({
   namespaces,
   authenticated = false,
   onCredentialSignIn = undefined,
-  backButton,
+  backTo,
   title,
   sections,
   children,
@@ -34,9 +28,9 @@ export default function Admin({
     Namespace[] | undefined
   >(namespaces);
 
-  const [currentBackButton, setCurrentBackButton] = useState<
-    boolean | undefined
-  >(backButton);
+  const [currentBackTo, setCurrentBackTo] = useState<string | undefined>(
+    backTo
+  );
   const [currentTitle, setCurrentTitle] = useState<string | undefined>(title);
   const [currentSections, setCurrentSections] = useState<Section[] | undefined>(
     sections
@@ -52,9 +46,9 @@ export default function Admin({
             initialNamespaces: namespaces,
             namespaces: currentNamespaces,
             setNamespaces: setCurrentNamespaces,
-            initialBackButton: backButton,
-            backButton: currentBackButton,
-            setBackButton: setCurrentBackButton,
+            initialBackTo: backTo,
+            backTo: currentBackTo,
+            setBackTo: setCurrentBackTo,
             initialTitle: title,
             title: currentTitle,
             setTitle: setCurrentTitle,
@@ -71,7 +65,7 @@ export default function Admin({
             <div className="container">
               <div className="header">
                 <Header
-                  backButton={currentBackButton}
+                  backTo={currentBackTo}
                   title={currentTitle}
                   sections={currentSections}
                 />
@@ -89,9 +83,9 @@ export default function Admin({
     }
   }, [
     authenticated,
-    backButton,
+    backTo,
     children,
-    currentBackButton,
+    currentBackTo,
     currentNamespaces,
     currentSections,
     currentTitle,
