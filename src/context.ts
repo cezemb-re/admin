@@ -1,6 +1,5 @@
 import {
   createContext,
-  MouseEvent,
   Dispatch,
   SetStateAction,
   useContext,

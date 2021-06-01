@@ -25,12 +25,14 @@ export default function Header({
       <div className="general" />
 
       <div className="namespace">
-        {backButton ? (
+        {backButton && history.length ? (
           <Button
             buttonStyle="link"
             leftIcon={IconName.ARROW}
             leftIconRotation={180}
-            onClick={history.goBack}
+            onClick={() => {
+              history.goBack();
+            }}
           >
             Retour
           </Button>
