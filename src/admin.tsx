@@ -70,7 +70,6 @@ export default function Admin({
                   sections={currentSections}
                 />
               </div>
-
               <div className="body">{children}</div>
             </div>
 
