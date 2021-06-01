@@ -72,7 +72,7 @@ export function useBackButton(
   const { initialBackButton, setBackButton } = useAdminContext();
   useEffect(() => {
     setBackButton(() => backButton);
-    return () => setBackButton(initialBackButton);
+    return () => setBackButton(() => initialBackButton);
   }, [backButton, initialBackButton, setBackButton]);
 }
 

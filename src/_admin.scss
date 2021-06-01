@@ -18,11 +18,11 @@
     justify-content: flex-start;
     align-items: stretch;
 
-    >.header {
+    > .header {
+
     }
 
     > .body {
-      flex: 1;
       overflow: auto;
     }
 

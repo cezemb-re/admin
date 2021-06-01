@@ -12,6 +12,7 @@ import Namespaces, {
 } from './menus/namespaces';
 import Header, { Props as HeaderProps, Section } from './menus/header';
 import adminContext from './context';
+import Contextual from './menus/contextual';
 
 export interface Props extends AuthProps, NamespacesProps, HeaderProps {
   authenticated?: boolean;
@@ -35,7 +36,7 @@ export default function Admin({
 
   const [currentBackButton, setCurrentBackButton] = useState<
     ((event: MouseEvent<HTMLButtonElement>) => Promise<void> | void) | undefined
-  >(backButton);
+  >(() => backButton);
   const [currentTitle, setCurrentTitle] = useState<string | undefined>(title);
   const [currentSections, setCurrentSections] = useState<Section[] | undefined>(
     sections
@@ -77,6 +78,10 @@ export default function Admin({
               </div>
 
               <div className="body">{children}</div>
+            </div>
+
+            <div className="contextual-menu">
+              <Contextual />
             </div>
           </div>
         </adminContext.Provider>

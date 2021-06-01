@@ -38,7 +38,7 @@ export default function Header({
         {sections && sections.length ? (
           <div className="sections">
             {sections.map((section: Section) => (
-              <div className="link" key={section.to}>
+              <div className="section" key={section.to}>
                 <Button buttonStyle="link" to={section.to}>
                   {section.label}
                 </Button>

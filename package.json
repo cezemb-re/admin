@@ -29,7 +29,7 @@
   "peerDependencies": {
     "react": ">=16.8.0",
     "@cezembre/forms": ">=1.5.3",
-    "@cezembre/ui": ">=0.2.2",
+    "@cezembre/ui": ">=0.2.4",
     "react-router-dom": ">=5.2.0"
   },
   "husky": {
@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@cezembre/forms": "^1.5.3",
-    "@cezembre/ui": "^0.2.0",
+    "@cezembre/ui": "^0.2.4",
     "@release-it/conventional-changelog": "^2.0.1",
     "@types/lodash.isequal": "^4.5.5",
     "@types/luxon": "^1.26.4",
