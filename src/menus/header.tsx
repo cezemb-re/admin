@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { MouseEvent, ReactElement } from 'react';
 import { Button, IconName } from '@cezembre/ui';
 
 export interface Section {
@@ -7,13 +7,13 @@ export interface Section {
 }
 
 export interface Props {
-  backTo?: string;
+  backButton?: (event: MouseEvent<HTMLButtonElement>) => Promise<void> | void;
   title?: string;
   sections?: Section[];
 }
 
 export default function Header({
-  backTo,
+  backButton,
   title,
   sections,
 }: Props): ReactElement {
@@ -22,12 +22,12 @@ export default function Header({
       <div className="general" />
 
       <div className="namespace">
-        {backTo ? (
+        {backButton ? (
           <Button
             buttonStyle="link"
             leftIcon={IconName.ARROW}
             leftIconRotation={180}
-            to={backTo}
+            onClick={backButton}
           >
             Retour
           </Button>

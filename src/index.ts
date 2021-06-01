@@ -5,7 +5,7 @@ import adminContext, {
   useNamespaces,
   useSections,
   useTitle,
-  useBackTo,
+  useBackButton,
 } from './context';
 import { Credentials } from './forms/auth';
 
@@ -19,7 +19,7 @@ export {
   useNamespaces,
   useSections,
   useTitle,
-  useBackTo,
+  useBackButton,
 };
 
 export type { AdminContext };

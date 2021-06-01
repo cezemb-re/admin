@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { IconName, Table } from '@cezembre/ui';
-import { useBackTo, useNamespaces, useSections, useTitle } from '@cezembre/admin';
+import { useNamespaces, useSections, useTitle } from '@cezembre/admin';
 
 interface Article {
   id: string;
@@ -37,10 +37,9 @@ const articleNamespaces = [
 ];
 
 export default function Articles(): ReactElement {
-  useNamespaces(articleNamespaces);
-  useBackTo('/');
-  useTitle('Articles');
   useSections(sections);
+  useNamespaces(articleNamespaces);
+  useTitle('Articles');
 
   return (
     <div>

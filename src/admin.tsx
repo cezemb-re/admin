@@ -1,4 +1,10 @@
-import React, { ReactElement, ReactNode, useEffect, useState } from 'react';
+import React, {
+  MouseEvent,
+  ReactElement,
+  ReactNode,
+  useEffect,
+  useState,
+} from 'react';
 import Auth, { Props as AuthProps } from './forms/auth';
 import Namespaces, {
   Props as NamespacesProps,
@@ -17,7 +23,7 @@ export default function Admin({
   namespaces,
   authenticated = false,
   onCredentialSignIn = undefined,
-  backTo,
+  backButton,
   title,
   sections,
   children,
@@ -28,9 +34,9 @@ export default function Admin({
     Namespace[] | undefined
   >(namespaces);
 
-  const [currentBackTo, setCurrentBackTo] = useState<string | undefined>(
-    backTo
-  );
+  const [currentBackButton, setCurrentBackButton] = useState<
+    ((event: MouseEvent<HTMLButtonElement>) => Promise<void> | void) | undefined
+  >(() => backButton);
   const [currentTitle, setCurrentTitle] = useState<string | undefined>(title);
   const [currentSections, setCurrentSections] = useState<Section[] | undefined>(
     sections
@@ -46,9 +52,9 @@ export default function Admin({
             initialNamespaces: namespaces,
             namespaces: currentNamespaces,
             setNamespaces: setCurrentNamespaces,
-            initialBackTo: backTo,
-            backTo: currentBackTo,
-            setBackTo: setCurrentBackTo,
+            initialBackButton: backButton,
+            backButton: currentBackButton,
+            setBackButton: setCurrentBackButton,
             initialTitle: title,
             title: currentTitle,
             setTitle: setCurrentTitle,
@@ -65,11 +71,12 @@ export default function Admin({
             <div className="container">
               <div className="header">
                 <Header
-                  backTo={currentBackTo}
+                  backButton={currentBackButton}
                   title={currentTitle}
                   sections={currentSections}
                 />
               </div>
+
               <div className="body">{children}</div>
             </div>
 
@@ -82,9 +89,9 @@ export default function Admin({
     }
   }, [
     authenticated,
-    backTo,
+    backButton,
     children,
-    currentBackTo,
+    currentBackButton,
     currentNamespaces,
     currentSections,
     currentTitle,
