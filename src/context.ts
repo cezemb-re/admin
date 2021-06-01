@@ -1,26 +1,34 @@
-import { createContext, MouseEvent, useContext, useEffect } from 'react';
+import {
+  createContext,
+  MouseEvent,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+} from 'react';
 import { Namespace } from './menus/namespaces';
 import { Section } from './menus/header';
 
 export interface AdminContext {
   initialNamespaces?: Namespace[];
   namespaces?: Namespace[];
-  setNamespaces: (namespaces: Namespace[] | undefined) => void;
+  setNamespaces: Dispatch<SetStateAction<Namespace[] | undefined>>;
   initialBackButton?: (
     event: MouseEvent<HTMLButtonElement>
   ) => Promise<void> | void;
   backButton?: (event: MouseEvent<HTMLButtonElement>) => Promise<void> | void;
-  setBackButton: (
-    callback:
+  setBackButton: Dispatch<
+    SetStateAction<
       | ((event: MouseEvent<HTMLButtonElement>) => Promise<void> | void)
       | undefined
-  ) => void;
+    >
+  >;
   initialTitle?: string;
   title?: string;
-  setTitle: (title: string | undefined) => void;
+  setTitle: Dispatch<SetStateAction<string | undefined>>;
   initialSections?: Section[];
   sections?: Section[];
-  setSections: (sections: Section[] | undefined) => void;
+  setSections: Dispatch<SetStateAction<Section[] | undefined>>;
 }
 
 export function getDefaultContext(): AdminContext {
@@ -63,7 +71,7 @@ export function useBackButton(
 ): void {
   const { initialBackButton, setBackButton } = useAdminContext();
   useEffect(() => {
-    setBackButton(backButton);
+    setBackButton(() => backButton);
     return () => setBackButton(initialBackButton);
   }, [backButton, initialBackButton, setBackButton]);
 }
