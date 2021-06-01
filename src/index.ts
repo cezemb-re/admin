@@ -7,6 +7,7 @@ import adminContext, {
   useTitle,
   useBackButton,
 } from './context';
+import { Credentials } from './forms/auth';
 
 /**
  * Context
@@ -22,6 +23,12 @@ export {
 };
 
 export type { AdminContext };
+
+/**
+ * Forms
+ */
+
+export type { Credentials };
 
 /**
  * Admin
