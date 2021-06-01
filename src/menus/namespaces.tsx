@@ -1,19 +1,19 @@
 import React, { ReactElement, ReactNode } from 'react';
 import { Avatar, Button, Icon, IconName } from '@cezembre/ui';
 
-export interface SideLink {
+export interface Namespace {
   label: string;
   to: string;
   icon?: IconName | ReactNode;
 }
 
 export interface Props {
-  links?: SideLink[];
+  namespaces?: Namespace[];
 }
 
-export default function Side({ links = [] }: Props): ReactElement {
+export default function Namespaces({ namespaces = [] }: Props): ReactElement {
   return (
-    <div className="cezembre-admin-side">
+    <div className="cezembre-admin-menu-namespaces">
       <section className="header">
         <div className="avatar">
           <Avatar size="small" />
@@ -22,16 +22,16 @@ export default function Side({ links = [] }: Props): ReactElement {
       </section>
 
       <section className="body">
-        {links
-          ? links.map((link: SideLink) => (
-              <div className="link" key={link.label}>
+        {namespaces
+          ? namespaces.map((namespace: Namespace) => (
+              <div className="link" key={namespace.to}>
                 <Button
                   buttonStyle="text"
                   theme="light"
-                  leftIcon={link.icon || IconName.DASHBOARD}
-                  to={link.to}
+                  leftIcon={namespace.icon || IconName.DASHBOARD}
+                  to={namespace.to}
                 >
-                  {link.label}
+                  {namespace.label}
                 </Button>
               </div>
             ))

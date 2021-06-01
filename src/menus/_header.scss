@@ -1,0 +1,27 @@
+.cezembre-admin-menus-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  > .general {
+    padding: 30px;
+
+  }
+
+  > .namespace {
+    padding: 20px;
+
+    > h1 {
+      @include JetBrainsMono(1.3em);
+      padding: 15px;
+    }
+
+    > .sections {
+      display: flex;
+    }
+
+  }
+
+}

@@ -1,53 +1,27 @@
 import React, { ReactElement } from 'react';
 import Admin from '@cezembre/admin';
+import { IconName } from '@cezembre/ui';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.scss';
-import { Button, IconName, Table } from '@cezembre/ui';
+import Articles from './articles';
+import Dashboard from './dashboard';
 
-interface Article {
-  id: string;
-  title: string;
-  description: string;
-}
-
-const articles: Article[] = [
-  {
-    id: '1',
-    title: 'Oui',
-    description: 'Voici un article',
-  },
-  {
-    id: '2',
-    title: 'Ceci est un article',
-    description: 'Oui comme ça',
-  },
-  {
-    id: '3',
-    title: 'Ok',
-    description: 'Hell World!',
-  },
+const namespaces = [
+  { label: 'Dashboard', to: '/' },
+  { label: 'Articles', to: '/articles', icon: IconName.MESSAGE },
 ];
 
 export default function App(): ReactElement {
   return (
     <div className="App">
-      <Admin
-        authenticated={false}
-        links={[
-          { label: 'Accueil', to: '/' },
-          { label: 'Users', to: '/users', icon: IconName.USER },
-        ]}>
-        <div>
-          <Button>Nouvel article</Button>
-        </div>
-
-        <Table<Article>
-          columns={[
-            { key: 'title', title: 'Titre' },
-            { key: 'description', title: 'Description' },
-          ]}
-          data={articles}
-        />
-      </Admin>
+      <BrowserRouter>
+        <Admin authenticated namespaces={namespaces}>
+          <Switch>
+            <Route path="/" exact component={Dashboard} />
+            <Route path="/articles" component={Articles} />
+          </Switch>
+        </Admin>
+      </BrowserRouter>
     </div>
   );
 }

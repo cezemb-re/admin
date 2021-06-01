@@ -1,20 +1,27 @@
-import Auth, { Credentials } from './forms/auth';
-import Side, { SideLink } from './menus/side';
 import Admin from './admin';
+import adminContext, {
+  AdminContext,
+  useAdminContext,
+  useNamespaces,
+  useSections,
+  useTitle,
+  useBackButton,
+} from './context';
 
 /**
- * Forms
+ * Context
  */
-export { Auth };
 
-export type { Credentials };
+export {
+  adminContext,
+  useAdminContext,
+  useNamespaces,
+  useSections,
+  useTitle,
+  useBackButton,
+};
 
-/**
- * Menus
- */
-export { Side };
-
-export type { SideLink };
+export type { AdminContext };
 
 /**
  * Admin
