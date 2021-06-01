@@ -1,2 +1,3 @@
-# Cézembre UI
-A concise ui library for react
+# Cézembre Admin
+
+Admin interface for Cezembre's projects
