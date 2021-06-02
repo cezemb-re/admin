@@ -5,7 +5,9 @@ import {
   SetStateAction,
   useContext,
   useEffect,
+  useRef,
 } from 'react';
+import _ from 'lodash';
 import { Namespace } from './menus/namespaces';
 import { Section } from './menus/header';
 
@@ -58,10 +60,19 @@ export default adminContext;
 
 export function useNamespaces(namespaces: Namespace[] | undefined): void {
   const { initialNamespaces, setNamespaces } = useAdminContext();
+  const memoizedNamespaces = useRef<Section[] | undefined>();
+
   useEffect(() => {
-    setNamespaces(namespaces);
+    if (!_.isEqual(memoizedNamespaces.current, namespaces)) {
+      setNamespaces(namespaces);
+      memoizedNamespaces.current = namespaces;
+    }
     return () => setNamespaces(initialNamespaces);
   }, [initialNamespaces, namespaces, setNamespaces]);
+
+  useEffect(() => {
+    return () => setNamespaces(initialNamespaces);
+  }, [initialNamespaces, setNamespaces]);
 }
 
 export function useBackButton(
@@ -70,24 +81,50 @@ export function useBackButton(
     | undefined
 ): void {
   const { initialBackButton, setBackButton } = useAdminContext();
+  const memoizedBackButton = useRef<
+    ((event: MouseEvent<HTMLButtonElement>) => Promise<void> | void) | undefined
+  >();
+
   useEffect(() => {
-    setBackButton(() => backButton);
-    return () => setBackButton(() => initialBackButton);
+    if (!_.isEqual(memoizedBackButton.current, backButton)) {
+      setBackButton(() => backButton);
+      memoizedBackButton.current = backButton;
+    }
   }, [backButton, initialBackButton, setBackButton]);
+
+  useEffect(() => {
+    return () => setBackButton(() => initialBackButton);
+  }, [initialBackButton, setBackButton]);
 }
 
 export function useTitle(title: string | undefined): void {
   const { initialTitle, setTitle } = useAdminContext();
+  const memoizedTitle = useRef<string | undefined>();
+
   useEffect(() => {
-    setTitle(title);
-    return () => setTitle(initialTitle);
+    if (memoizedTitle.current !== title) {
+      setTitle(title);
+      memoizedTitle.current = title;
+    }
   }, [title, initialTitle, setTitle]);
+
+  useEffect(() => {
+    return () => setTitle(initialTitle);
+  }, [initialTitle, setTitle]);
 }
 
 export function useSections(sections: Section[] | undefined): void {
   const { initialSections, setSections } = useAdminContext();
+  const memoizedSections = useRef<Section[] | undefined>();
+
   useEffect(() => {
-    setSections(sections);
-    return () => setSections(initialSections);
+    if (!_.isEqual(memoizedSections.current, sections)) {
+      setSections(sections);
+      memoizedSections.current = sections;
+    }
   }, [sections, initialSections, setSections]);
+
+  useEffect(() => {
+    return () => setSections(initialSections);
+  }, [initialSections, setSections]);
 }
