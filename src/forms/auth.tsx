@@ -50,7 +50,7 @@ export default function Auth({
   }, []);
 
   return (
-    <div className="cezembre-admin-auth">
+    <div className="cezembre-admin-forms-auth">
       <div className="methods">
         <h1>Administration</h1>
         <p>Espace réservé</p>
