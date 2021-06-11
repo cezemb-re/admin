@@ -1,6 +1,6 @@
 import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { Field, Form } from '@cezembre/forms';
-import { Icon, IconName, Input } from '@cezembre/ui';
+import { Input } from '@cezembre/ui';
 import Paragraph, { ParagraphFields, ParagraphState } from './paragraph';
 
 export interface ArticleState {
@@ -16,16 +16,21 @@ export interface Props {
   title?: string | null;
   initialParagraphs?: ParagraphState[];
   onChangeArticle?: (fields: ArticleFields) => Promise<void> | void;
+  onCreateParagraph?: (
+    fields: ParagraphFields
+  ) => Promise<string | number> | string | number;
   onChangeParagraph?: (
     id: string | number | undefined,
     fields: ParagraphFields
   ) => Promise<void> | void;
+  onDeleteParagraph?: (id: string | number | undefined) => Promise<void> | void;
 }
 
 export default function Article({
   title,
   initialParagraphs,
   onChangeArticle,
+  onCreateParagraph,
   onChangeParagraph,
 }: Props): ReactElement {
   const [paragraphs, setParagraphs] = useState<ParagraphState[]>(
@@ -43,6 +48,45 @@ export default function Article({
       });
     }
   }, [paragraphs.length]);
+
+  const changeParagraph = useCallback(
+    async (paragraph: ParagraphState, fields: ParagraphFields) => {
+      if (!paragraph.id && onCreateParagraph) {
+        let id = onCreateParagraph(fields);
+        if (
+          id &&
+          typeof id === 'object' &&
+          'then' in id &&
+          id.then &&
+          typeof id.then === 'function'
+        ) {
+          id = await id;
+        }
+
+        if (id && (typeof id === 'string' || typeof id === 'number')) {
+          const index = paragraphs.findIndex(
+            ({ key }) => key === paragraph.key
+          );
+          if (index !== -1) {
+            paragraphs[index].id = id;
+            setParagraphs(paragraphs);
+          }
+        }
+      } else if (onChangeParagraph) {
+        const res = onChangeParagraph(paragraph.id, fields);
+        if (
+          res &&
+          typeof res === 'object' &&
+          'then' in res &&
+          res.then &&
+          typeof res.then === 'function'
+        ) {
+          await res;
+        }
+      }
+    },
+    [onChangeParagraph, onCreateParagraph, paragraphs]
+  );
 
   return (
     <div className="cezembre-admin-forms-article">
@@ -65,9 +109,7 @@ export default function Article({
               <Paragraph
                 paragraph={paragraph}
                 onChange={(fields: ParagraphFields) =>
-                  onChangeParagraph
-                    ? onChangeParagraph(paragraph.id, fields)
-                    : undefined
+                  changeParagraph(paragraph, fields)
                 }
               />
             </div>
