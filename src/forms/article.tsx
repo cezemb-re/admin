@@ -20,7 +20,7 @@ export interface Props {
     fields: ParagraphFields
   ) => Promise<string | number> | string | number;
   onChangeParagraph?: (
-    id: string | number | undefined,
+    id: string | number,
     fields: ParagraphFields
   ) => Promise<void> | void;
   onDeleteParagraph?: (id: string | number | undefined) => Promise<void> | void;
@@ -72,7 +72,7 @@ export default function Article({
             setParagraphs(paragraphs);
           }
         }
-      } else if (onChangeParagraph) {
+      } else if (paragraph.id && onChangeParagraph) {
         const res = onChangeParagraph(paragraph.id, fields);
         if (
           res &&
