@@ -51,6 +51,7 @@ export default function Paragraph({
         {paragraph.type === 'rich-text' ? (
           <Field
             component={Wysiwyg}
+            initialValue={paragraph.content}
             name="content"
             type="paragraph"
             placeholder="Votre texte ici ..."
