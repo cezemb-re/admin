@@ -13,7 +13,7 @@ export interface ParagraphState {
 }
 
 export interface ParagraphFields {
-  type?: 'title' | 'text' | 'rich-text' | 'image' | 'video' | 'custom';
+  type?: 'title' | 'text' | 'rich-text' | 'media';
   size?: 'auto' | 'tiny' | 'small' | 'medium' | 'large';
   content?: string | object | null;
 }
