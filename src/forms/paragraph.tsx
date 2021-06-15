@@ -6,7 +6,7 @@ export interface ParagraphState {
   key: string;
   id?: string | number;
   position?: number;
-  type?: 'title' | 'text' | 'rich-text' | 'image' | 'video' | 'custom';
+  type?: 'title' | 'text' | 'rich-text' | 'media';
   size?: 'auto' | 'tiny' | 'small' | 'medium' | 'large';
   style?: string | null;
   content?: string | object | null;
