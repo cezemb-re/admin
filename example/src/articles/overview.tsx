@@ -8,13 +8,13 @@ export interface Props {
 
 export function createParagraph(): Promise<string> {
   return new Promise((resolve) => {
-    setTimeout(() => resolve('TEST_ID'), 500);
+    setTimeout(() => resolve(Math.random().toString(10).substr(2, 10)), 500);
   });
 }
 
 export function deleteParagraph(id: string | number): Promise<boolean> {
   return new Promise((resolve) => {
-    setTimeout(() => resolve(true), 2000);
+    setTimeout(() => resolve(true), 500);
   });
 }
 

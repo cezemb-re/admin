@@ -107,7 +107,7 @@ export default function Article({
               );
 
               if (index !== -1) {
-                return nextParagraphs.splice(index, 1);
+                nextParagraphs.splice(index, 1);
               }
 
               return nextParagraphs;
