@@ -31,13 +31,13 @@ export default function Article({
   }, []);
 
   useEffect(() => {
-    if (!paragraphs.length) {
+    if (!paragraphs.length || paragraphs[paragraphs.length - 1].id) {
       setParagraphs((list) => {
         list.push(createNewParagraph());
         return list;
       });
     }
-  }, [createNewParagraph, paragraphs.length]);
+  }, [createNewParagraph, paragraphs]);
 
   const changeParagraph = useCallback(
     async (paragraph: ParagraphState, fields: ParagraphFields) => {
