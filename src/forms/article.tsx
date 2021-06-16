@@ -99,16 +99,18 @@ export default function Article({
           }
 
           if (doDelete) {
-            setParagraphs((_paragraphs: ParagraphState[]) => {
-              const index = _paragraphs.findIndex(
+            setParagraphs((ps: ParagraphState[]) => {
+              const nextParagraphs = [...ps];
+
+              const index = nextParagraphs.findIndex(
                 ({ key }) => key === paragraph.key
               );
 
               if (index !== -1) {
-                return _paragraphs.splice(index, 1);
+                return nextParagraphs.splice(index, 1);
               }
 
-              return _paragraphs;
+              return nextParagraphs;
             });
           }
         }
