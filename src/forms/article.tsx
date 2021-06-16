@@ -1,8 +1,7 @@
 import React, { ReactElement, useCallback, useEffect, useState } from 'react';
-import Paragraph, { ParagraphFields, ParagraphState, Type } from './paragraph';
+import Paragraph, { ParagraphFields, ParagraphState } from './paragraph';
 
 export interface Props {
-  title?: string | null;
   initialParagraphs?: ParagraphState[];
   onCreateParagraph?: (
     fields: ParagraphFields

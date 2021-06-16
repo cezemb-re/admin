@@ -13,7 +13,7 @@ export interface ParagraphState {
   type?: Type;
   size?: Size;
   style?: string | null;
-  content?: string | RawDraftContentState;
+  content?: string | RawDraftContentState | null;
 }
 
 export interface ParagraphFields {
@@ -97,7 +97,7 @@ export default function Paragraph({
         {paragraph.type === 'rich-text' ? (
           <Field
             component={Wysiwyg}
-            initialValue={paragraph.content}
+            initialValue={paragraph.content || undefined}
             name="content"
             type="paragraph"
             placeholder="Votre texte ici ..."

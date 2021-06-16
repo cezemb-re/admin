@@ -1,44 +1,94 @@
-import React, { ReactElement, useCallback } from 'react';
+import React, { ReactElement, useCallback, useState } from 'react';
 import { ArticleForm, ParagraphFields } from '@cezembre/admin';
+import { RawDraftContentState } from 'draft-js';
 import Article from './model';
 
 export interface Props {
   article: Article;
 }
 
-export function createParagraph(): Promise<string> {
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(Math.random().toString(10).substr(2, 10)), 500);
-  });
+enum Size {
+  auto = 'auto',
+  tiny = 'tiny',
+  small = 'small',
+  medium = 'medium',
+  large = 'large',
 }
 
-export function deleteParagraph(id: string | number): Promise<boolean> {
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(true), 500);
-  });
+enum Type {
+  title = 'title',
+  text = 'text',
+  richText = 'rich-text',
+  media = 'media',
+}
+
+interface Paragraph {
+  id: string;
+  article: string | null;
+  type: Type | null;
+  size: Size | null;
+  style: string | null;
+  content: string | RawDraftContentState | null;
+  position: number;
 }
 
 export default function Overview({ article }: Props): ReactElement {
-  const onCreateParagraph = useCallback(async (fields: ParagraphFields) => {
-    const id = await createParagraph();
-    return id;
+  const [paragraphs, setParagraphs] = useState<Paragraph[]>([]);
+
+  const deleteParagraph = useCallback((id: string | number): Promise<boolean> => {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(true), 500);
+    });
   }, []);
 
-  const onChangeParagraph = useCallback((id: string | number, fields: ParagraphFields) => {}, []);
+  const onCreateParagraph = useCallback(
+    (fields: ParagraphFields): Promise<string> => {
+      return new Promise((resolve) => {
+        const id = Math.random().toString(36).substr(2, 10);
+        console.log('CREATE');
+        setTimeout(() => {
+          setParagraphs((p) => {
+            const np = [...p];
+            np.push({
+              id,
+              article: article.id,
+              type: Type.richText,
+              size: Size.auto,
+              style: null,
+              content: fields.content || null,
+              position: 0,
+            });
+            return np;
+          });
+          resolve(id);
+        }, 10);
+      });
+    },
+    [article.id],
+  );
 
-  const onDeleteParagraph = useCallback(async (id: string | number): Promise<boolean> => {
-    const res = await deleteParagraph(id);
-    return res;
+  const onChangeParagraph = useCallback((id: string | number, fields: ParagraphFields) => {
+    console.log('Change', id);
   }, []);
 
   return (
     <div className="articles-overview">
       <ArticleForm
-        title="Test"
+        initialParagraphs={paragraphs.map((paragraph: Paragraph) => ({
+          id: paragraph.id || undefined,
+          key: paragraph.id,
+          content: paragraph.content || undefined,
+          size: paragraph.size || 'auto',
+          type: paragraph.type || 'text',
+        }))}
         onCreateParagraph={onCreateParagraph}
         onChangeParagraph={onChangeParagraph}
-        onDeleteParagraph={onDeleteParagraph}
+        onDeleteParagraph={deleteParagraph}
       />
+
+      {paragraphs.map((p) => (
+        <p key={p.id}>{p.id}</p>
+      ))}
     </div>
   );
 }
