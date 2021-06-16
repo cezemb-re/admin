@@ -31,18 +31,12 @@
     "@cezembre/fronts": ">=0.1.3",
     "@cezembre/forms": ">=1.5.3",
     "@cezembre/ui": ">=0.2.6",
-    "react-router-dom": ">=5.2.0"
+    "react-router-dom": ">=5.2.0",
+    "draft-js": ">=0.11.7"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "eslint"
-    }
-  },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "validator": "^13.6.0"
   },
   "devDependencies": {
     "@cezembre/forms": "^1.5.4",
@@ -81,9 +75,15 @@
     "ts-loader": "^9.1.1",
     "typescript": "^4.2.4"
   },
-  "dependencies": {
-    "draft-js": "^0.11.7",
-    "lodash": "^4.17.21",
-    "validator": "^13.6.0"
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "eslint"
+    }
   }
 }

@@ -24,7 +24,10 @@ export interface ParagraphFields {
 
 export interface Props {
   paragraph: ParagraphState;
-  onChange?: (paragraph: ParagraphFields) => Promise<void> | void;
+  onChange?: (
+    paragraph: ParagraphFields,
+    changes: Partial<ParagraphFields>
+  ) => Promise<void> | void;
   onDelete?: () => void;
 }
 
@@ -80,11 +83,20 @@ export default function Paragraph({
 
   const toggleContextualMenu = useCallback(() => {}, []);
 
+  const changeParagraph = useCallback(
+    async (fields: ParagraphFields, changes: Partial<ParagraphFields>) => {
+      if (onChange) {
+        await onChange(fields, changes);
+      }
+    },
+    [onChange]
+  );
+
   return (
     <Form<ParagraphFields>
       ref={form}
       className={classNames.join(' ')}
-      onChange={onChange}
+      onChange={changeParagraph}
     >
       <div className="contextual-menu">
         <Field<Type> name="type" initialValue={paragraph.type} type="hidden" />
@@ -94,16 +106,14 @@ export default function Paragraph({
       </div>
 
       <div className={`content ${paragraph.type}`}>
-        {paragraph.type === 'rich-text' ? (
-          <Field
-            component={Wysiwyg}
-            initialValue={paragraph.content || undefined}
-            name="content"
-            type="paragraph"
-            placeholder="Votre texte ici ..."
-            onDelete={onDelete}
-          />
-        ) : null}
+        <Field
+          component={Wysiwyg}
+          initialValue={paragraph.content || ''}
+          name="content"
+          type="paragraph"
+          placeholder="Votre texte ici ..."
+          onDelete={onDelete}
+        />
       </div>
     </Form>
   );
