@@ -1,5 +1,5 @@
 import React, { ReactElement, useCallback } from 'react';
-import { ArticleForm, ArticleFields, ParagraphFields } from '@cezembre/admin';
+import { ArticleForm, ParagraphFields } from '@cezembre/admin';
 import Article from './model';
 
 export interface Props {
@@ -12,28 +12,32 @@ export function createParagraph(): Promise<string> {
   });
 }
 
-export default function Overview({ article }: Props): ReactElement {
-  const onChangeArticle = useCallback((fields: ArticleFields) => {
-    console.log(fields.title);
-  }, []);
+export function deleteParagraph(id: string | number): Promise<boolean> {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(true), 2000);
+  });
+}
 
+export default function Overview({ article }: Props): ReactElement {
   const onCreateParagraph = useCallback(async (fields: ParagraphFields) => {
-    console.log('CREATE PARAGRAPH');
     const id = await createParagraph();
     return id;
   }, []);
 
-  const onChangeParagraph = useCallback((id: string | number, fields: ParagraphFields) => {
-    console.log(id, fields.content);
+  const onChangeParagraph = useCallback((id: string | number, fields: ParagraphFields) => {}, []);
+
+  const onDeleteParagraph = useCallback(async (id: string | number): Promise<boolean> => {
+    const res = await deleteParagraph(id);
+    return res;
   }, []);
 
   return (
     <div className="articles-overview">
       <ArticleForm
         title="Test"
-        onChangeArticle={onChangeArticle}
         onCreateParagraph={onCreateParagraph}
         onChangeParagraph={onChangeParagraph}
+        onDeleteParagraph={onDeleteParagraph}
       />
     </div>
   );

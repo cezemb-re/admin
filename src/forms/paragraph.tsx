@@ -1,32 +1,49 @@
-import React, { ReactElement, useEffect, useState } from 'react';
-import { Field, Form } from '@cezembre/forms';
-import { Wysiwyg } from '@cezembre/ui';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
+import { Field, Form, FormState, getDefaultFormState } from '@cezembre/forms';
+import { Icon, IconName, Wysiwyg } from '@cezembre/ui';
+import { RawDraftContentState } from 'draft-js';
+
+export type Type = 'title' | 'text' | 'rich-text' | 'media';
+export type Size = 'auto' | 'tiny' | 'small' | 'medium' | 'large';
 
 export interface ParagraphState {
   key: string;
   id?: string | number;
   position?: number;
-  type?: 'title' | 'text' | 'rich-text' | 'media';
-  size?: 'auto' | 'tiny' | 'small' | 'medium' | 'large';
+  type?: Type;
+  size?: Size;
   style?: string | null;
-  content?: string | object | null;
+  content?: string | RawDraftContentState;
 }
 
 export interface ParagraphFields {
-  type?: 'title' | 'text' | 'rich-text' | 'media';
-  size?: 'auto' | 'tiny' | 'small' | 'medium' | 'large';
-  content?: string | object | null;
+  type?: Type;
+  size?: Size;
+  content?: string | RawDraftContentState;
 }
 
 export interface Props {
   paragraph: ParagraphState;
   onChange?: (paragraph: ParagraphFields) => Promise<void> | void;
+  onDelete?: () => void;
 }
 
 export default function Paragraph({
   paragraph,
   onChange,
+  onDelete,
 }: Props): ReactElement {
+  const [formState, setFormState] = useState<FormState<ParagraphFields>>(
+    getDefaultFormState<ParagraphFields>()
+  );
+  const [empty, setEmpty] = useState<boolean>(true);
+
+  const form = useCallback((formContext) => {
+    if (formContext) {
+      setFormState(formContext.formState);
+    }
+  }, []);
+
   const [classNames, setClassNames] = useState<string[]>([
     'cezembre-admin-forms-paragraph',
   ]);
@@ -38,13 +55,42 @@ export default function Paragraph({
       nextClassNames.push(paragraph.size);
     }
 
+    if (empty) {
+      nextClassNames.push('empty');
+    }
+
+    if (formState.fields.content?.isActive) {
+      nextClassNames.push('active');
+    }
+
     setClassNames(nextClassNames);
-  }, [paragraph]);
+  }, [empty, formState.fields.content, paragraph]);
+
+  useEffect(() => {
+    if (!formState.values.content) {
+      setEmpty(true);
+    } else if (typeof formState.values.content === 'string') {
+      setEmpty(formState.values.content.length <= 0);
+    } else if (formState.values.content.blocks.length === 1) {
+      setEmpty(formState.values.content.blocks[0].text.length <= 0);
+    } else {
+      setEmpty(false);
+    }
+  }, [formState.values.content]);
+
+  const toggleContextualMenu = useCallback(() => {}, []);
 
   return (
-    <Form<ParagraphFields> className={classNames.join(' ')} onChange={onChange}>
+    <Form<ParagraphFields>
+      ref={form}
+      className={classNames.join(' ')}
+      onChange={onChange}
+    >
       <div className="contextual-menu">
-        <Field name="type" initialValue={paragraph.type} type="hidden" />
+        <Field<Type> name="type" initialValue={paragraph.type} type="hidden" />
+        <button typeof="button" onClick={toggleContextualMenu}>
+          <Icon name={IconName.EDIT} />
+        </button>
       </div>
 
       <div className={`content ${paragraph.type}`}>
@@ -55,6 +101,7 @@ export default function Paragraph({
             name="content"
             type="paragraph"
             placeholder="Votre texte ici ..."
+            onDelete={onDelete}
           />
         ) : null}
       </div>

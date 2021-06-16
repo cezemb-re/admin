@@ -1,21 +1,9 @@
 import React, { ReactElement, useCallback, useEffect, useState } from 'react';
-import { Field, Form } from '@cezembre/forms';
-import { Input } from '@cezembre/ui';
-import Paragraph, { ParagraphFields, ParagraphState } from './paragraph';
-
-export interface ArticleState {
-  title?: string | null;
-  paragraphs?: ParagraphState[];
-}
-
-export interface ArticleFields {
-  title: string | null;
-}
+import Paragraph, { ParagraphFields, ParagraphState, Type } from './paragraph';
 
 export interface Props {
   title?: string | null;
   initialParagraphs?: ParagraphState[];
-  onChangeArticle?: (fields: ArticleFields) => Promise<void> | void;
   onCreateParagraph?: (
     fields: ParagraphFields
   ) => Promise<string | number> | string | number;
@@ -23,31 +11,34 @@ export interface Props {
     id: string | number,
     fields: ParagraphFields
   ) => Promise<void> | void;
-  onDeleteParagraph?: (id: string | number | undefined) => Promise<void> | void;
+  onDeleteParagraph?: (id: string | number) => Promise<boolean> | boolean;
 }
 
 export default function Article({
-  title,
   initialParagraphs,
-  onChangeArticle,
   onCreateParagraph,
   onChangeParagraph,
+  onDeleteParagraph,
 }: Props): ReactElement {
   const [paragraphs, setParagraphs] = useState<ParagraphState[]>(
     initialParagraphs || []
   );
 
+  const createNewParagraph = useCallback((): ParagraphState => {
+    return {
+      key: Math.random().toString(36).substr(2, 10),
+      type: 'rich-text',
+    };
+  }, []);
+
   useEffect(() => {
     if (!paragraphs.length) {
       setParagraphs((list) => {
-        list.push({
-          key: Math.random().toString(36).substr(2, 10),
-          type: 'rich-text',
-        });
+        list.push(createNewParagraph());
         return list;
       });
     }
-  }, [paragraphs.length]);
+  }, [createNewParagraph, paragraphs.length]);
 
   const changeParagraph = useCallback(
     async (paragraph: ParagraphState, fields: ParagraphFields) => {
@@ -64,12 +55,15 @@ export default function Article({
         }
 
         if (id && (typeof id === 'string' || typeof id === 'number')) {
-          const index = paragraphs.findIndex(
+          const nextParagraphs = [...paragraphs];
+
+          const index = nextParagraphs.findIndex(
             ({ key }) => key === paragraph.key
           );
           if (index !== -1) {
-            paragraphs[index].id = id;
-            setParagraphs(paragraphs);
+            nextParagraphs[index].id = id;
+            nextParagraphs.push(createNewParagraph());
+            setParagraphs(nextParagraphs);
           }
         }
       } else if (paragraph.id && onChangeParagraph) {
@@ -85,39 +79,57 @@ export default function Article({
         }
       }
     },
-    [onChangeParagraph, onCreateParagraph, paragraphs]
+    [createNewParagraph, onChangeParagraph, onCreateParagraph, paragraphs]
+  );
+
+  const deleteParagraph = useCallback(
+    (paragraph: ParagraphState) => {
+      (async () => {
+        if (paragraph.id && onDeleteParagraph) {
+          let doDelete = onDeleteParagraph(paragraph.id);
+
+          if (
+            doDelete &&
+            typeof doDelete === 'object' &&
+            'then' in doDelete &&
+            doDelete.then &&
+            typeof doDelete.then === 'function'
+          ) {
+            doDelete = await doDelete;
+          }
+
+          if (doDelete) {
+            setParagraphs((_paragraphs: ParagraphState[]) => {
+              const index = _paragraphs.findIndex(
+                ({ key }) => key === paragraph.key
+              );
+
+              if (index !== -1) {
+                return _paragraphs.splice(index, 1);
+              }
+
+              return _paragraphs;
+            });
+          }
+        }
+      })();
+    },
+    [onDeleteParagraph]
   );
 
   return (
     <div className="cezembre-admin-forms-article">
-      <Form<ArticleFields> onChange={onChangeArticle} className="article">
-        <div className="field title">
-          <Field
-            component={Input}
-            name="title"
-            inputStyle="inline"
-            placeholder="Titre ..."
-            initialValue={title}
+      {paragraphs.map((paragraph: ParagraphState) => (
+        <div key={paragraph.key} className="paragraph">
+          <Paragraph
+            paragraph={paragraph}
+            onChange={(fields: ParagraphFields) =>
+              changeParagraph(paragraph, fields)
+            }
+            onDelete={() => deleteParagraph(paragraph)}
           />
         </div>
-      </Form>
-
-      {paragraphs.length ? (
-        <div className="paragraphs">
-          {paragraphs.map((paragraph: ParagraphState) => (
-            <div key={paragraph.key} className="paragraph">
-              <Paragraph
-                paragraph={paragraph}
-                onChange={(fields: ParagraphFields) =>
-                  changeParagraph(paragraph, fields)
-                }
-              />
-            </div>
-          ))}
-        </div>
-      ) : null}
-
-      {/* <div className="new-paragraph"> ... </div> */}
+      ))}
     </div>
   );
 }

@@ -9,8 +9,12 @@ import adminContext, {
 } from './context';
 
 import AuthForm, { Credentials } from './forms/auth';
-import ArticleForm, { ArticleFields } from './forms/article';
-import { ParagraphFields } from './forms/paragraph';
+import ArticleForm from './forms/article';
+import {
+  ParagraphFields,
+  Type as ParagraphType,
+  Size as ParagraphSize,
+} from './forms/paragraph';
 
 /**
  * Context
@@ -31,7 +35,7 @@ export type { AdminContext };
  * Forms
  */
 
-export type { Credentials, ArticleFields, ParagraphFields };
+export type { Credentials, ParagraphFields, ParagraphSize, ParagraphType };
 
 export { AuthForm, ArticleForm };
 
