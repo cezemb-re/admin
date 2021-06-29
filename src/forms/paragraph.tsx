@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useEffect, useState } from 'react';
+import { ReactElement, useCallback, useEffect, useState } from 'react';
 import { Field, Form, FormState, getDefaultFormState } from '@cezembre/forms';
 import { Icon, IconName, Wysiwyg } from '@cezembre/ui';
 import { RawDraftContentState } from 'draft-js';

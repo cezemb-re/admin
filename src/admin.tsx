@@ -1,10 +1,4 @@
-import React, {
-  MouseEvent,
-  ReactElement,
-  ReactNode,
-  useEffect,
-  useState,
-} from 'react';
+import { MouseEvent, ReactElement, ReactNode, useEffect, useState } from 'react';
 import Auth, { Props as AuthProps } from './forms/auth';
 import Namespaces, {
   Props as NamespacesProps,

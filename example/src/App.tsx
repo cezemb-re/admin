@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import Admin from '@cezembre/admin';
 import { IconName } from '@cezembre/ui';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';

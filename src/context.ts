@@ -14,12 +14,12 @@ import { Section } from './menus/header';
 export interface AdminContext {
   initialNamespaces?: Namespace[];
   namespaces?: Namespace[];
-  setNamespaces: Dispatch<SetStateAction<Namespace[] | undefined>>;
+  setNamespaces?: Dispatch<SetStateAction<Namespace[] | undefined>>;
   initialBackButton?: (
     event: MouseEvent<HTMLButtonElement>
   ) => Promise<void> | void;
   backButton?: (event: MouseEvent<HTMLButtonElement>) => Promise<void> | void;
-  setBackButton: Dispatch<
+  setBackButton?: Dispatch<
     SetStateAction<
       | ((event: MouseEvent<HTMLButtonElement>) => Promise<void> | void)
       | undefined
@@ -27,30 +27,13 @@ export interface AdminContext {
   >;
   initialTitle?: string;
   title?: string;
-  setTitle: Dispatch<SetStateAction<string | undefined>>;
+  setTitle?: Dispatch<SetStateAction<string | undefined>>;
   initialSections?: Section[];
   sections?: Section[];
-  setSections: Dispatch<SetStateAction<Section[] | undefined>>;
+  setSections?: Dispatch<SetStateAction<Section[] | undefined>>;
 }
 
-export function getDefaultContext(): AdminContext {
-  return {
-    initialNamespaces: undefined,
-    namespaces: undefined,
-    setNamespaces: () => undefined,
-    backButton: undefined,
-    initialBackButton: undefined,
-    setBackButton: () => undefined,
-    initialTitle: undefined,
-    title: undefined,
-    setTitle: () => undefined,
-    initialSections: undefined,
-    sections: undefined,
-    setSections: () => undefined,
-  };
-}
-
-const adminContext = createContext<AdminContext>(getDefaultContext());
+const adminContext = createContext<AdminContext>({});
 
 export function useAdminContext(): AdminContext {
   return useContext<AdminContext>(adminContext);
@@ -63,15 +46,14 @@ export function useNamespaces(namespaces: Namespace[] | undefined): void {
   const memoizedNamespaces = useRef<Section[] | undefined>();
 
   useEffect(() => {
-    if (!_.isEqual(memoizedNamespaces.current, namespaces)) {
+    if (!_.isEqual(memoizedNamespaces.current, namespaces) && setNamespaces) {
       setNamespaces(namespaces);
       memoizedNamespaces.current = namespaces;
     }
-    return () => setNamespaces(initialNamespaces);
   }, [initialNamespaces, namespaces, setNamespaces]);
 
   useEffect(() => {
-    return () => setNamespaces(initialNamespaces);
+    return () => (setNamespaces ? setNamespaces(initialNamespaces) : undefined);
   }, [initialNamespaces, setNamespaces]);
 }
 
@@ -86,14 +68,15 @@ export function useBackButton(
   >();
 
   useEffect(() => {
-    if (!_.isEqual(memoizedBackButton.current, backButton)) {
+    if (!_.isEqual(memoizedBackButton.current, backButton) && setBackButton) {
       setBackButton(() => backButton);
       memoizedBackButton.current = backButton;
     }
   }, [backButton, initialBackButton, setBackButton]);
 
   useEffect(() => {
-    return () => setBackButton(() => initialBackButton);
+    return () =>
+      setBackButton ? setBackButton(() => initialBackButton) : undefined;
   }, [initialBackButton, setBackButton]);
 }
 
@@ -102,14 +85,14 @@ export function useTitle(title: string | undefined): void {
   const memoizedTitle = useRef<string | undefined>();
 
   useEffect(() => {
-    if (memoizedTitle.current !== title) {
+    if (memoizedTitle.current !== title && setTitle) {
       setTitle(title);
       memoizedTitle.current = title;
     }
   }, [title, initialTitle, setTitle]);
 
   useEffect(() => {
-    return () => setTitle(initialTitle);
+    return () => (setTitle ? setTitle(initialTitle) : undefined);
   }, [initialTitle, setTitle]);
 }
 
@@ -118,13 +101,13 @@ export function useSections(sections: Section[] | undefined): void {
   const memoizedSections = useRef<Section[] | undefined>();
 
   useEffect(() => {
-    if (!_.isEqual(memoizedSections.current, sections)) {
+    if (!_.isEqual(memoizedSections.current, sections) && setSections) {
       setSections(sections);
       memoizedSections.current = sections;
     }
   }, [sections, initialSections, setSections]);
 
   useEffect(() => {
-    return () => setSections(initialSections);
+    return () => (setSections ? setSections(initialSections) : undefined);
   }, [initialSections, setSections]);
 }

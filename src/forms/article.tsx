@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useEffect, useState } from 'react';
+import { ReactElement, useCallback, useEffect, useState } from 'react';
 import Paragraph, { ParagraphFields, ParagraphState } from './paragraph';
 
 export interface Props {
@@ -32,10 +32,8 @@ export default function Article({
 
   useEffect(() => {
     if (!paragraphs.length || paragraphs[paragraphs.length - 1].id) {
-      setParagraphs((list) => {
-        list.push(createNewParagraph());
-        return list;
-      });
+      const nextParagraphs = [...paragraphs, createNewParagraph()];
+      setParagraphs(nextParagraphs);
     }
   }, [createNewParagraph, paragraphs]);
 

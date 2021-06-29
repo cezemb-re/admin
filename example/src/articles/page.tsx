@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { useParams, useHistory, Switch, Route, useRouteMatch } from 'react-router-dom';
 import { useBackButton, useTitle, useSections } from '@cezembre/admin';
 import articles from './data';

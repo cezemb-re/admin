@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { Table } from '@cezembre/ui';
 import { useTitle } from '@cezembre/admin';
 import { useHistory } from 'react-router-dom';

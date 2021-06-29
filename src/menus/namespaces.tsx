@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import { Avatar, Button, Icon, IconName } from '@cezembre/ui';
 
 export interface Namespace {

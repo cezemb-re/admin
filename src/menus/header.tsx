@@ -1,4 +1,4 @@
-import React, { MouseEvent, ReactElement } from 'react';
+import { MouseEvent, ReactElement } from 'react';
 import { Button, IconName } from '@cezembre/ui';
 import { useHistory } from 'react-router-dom';
 

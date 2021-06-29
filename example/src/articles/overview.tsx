@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useState } from 'react';
+import { ReactElement, useCallback, useState } from 'react';
 import { ArticleForm, ParagraphFields } from '@cezembre/admin';
 import { RawDraftContentState } from 'draft-js';
 import Article from './model';
