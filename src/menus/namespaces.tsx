@@ -8,17 +8,18 @@ export interface Namespace {
 }
 
 export interface Props {
+  project?: string;
   namespaces?: Namespace[];
 }
 
-export default function Namespaces({ namespaces = [] }: Props): ReactElement {
+export default function Namespaces({ project, namespaces = [] }: Props): ReactElement {
   return (
     <div className="cezembre-admin-menu-namespaces">
       <section className="header">
         <div className="avatar">
           <Avatar size="small" />
         </div>
-        <h1>Fleuraison</h1>
+        <h1>{project}</h1>
       </section>
 
       <section className="body">

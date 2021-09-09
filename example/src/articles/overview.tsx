@@ -45,7 +45,6 @@ export default function Overview({ article }: Props): ReactElement {
     (fields: ParagraphFields): Promise<string> => {
       return new Promise((resolve) => {
         const id = Math.random().toString(36).substr(2, 10);
-        console.log('CREATE');
         setTimeout(() => {
           setParagraphs((p) => {
             const np = [...p];

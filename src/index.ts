@@ -1,3 +1,4 @@
+import './index.scss';
 import Admin from './admin';
 import adminContext, {
   AdminContext,
@@ -11,6 +12,7 @@ import adminContext, {
 import AuthForm, { Credentials } from './forms/auth';
 import ArticleForm from './forms/article';
 import { ParagraphFields, Type as ParagraphType, Size as ParagraphSize } from './forms/paragraph';
+import { Namespace } from './menus/namespaces';
 
 /**
  * Context
@@ -27,6 +29,12 @@ export type { AdminContext };
 export type { Credentials, ParagraphFields, ParagraphSize, ParagraphType };
 
 export { AuthForm, ArticleForm };
+
+/**
+ * Menus
+ */
+
+export type { Namespace };
 
 /**
  * Admin

@@ -11,6 +11,7 @@ export interface Props extends AuthProps, NamespacesProps, HeaderProps {
 }
 
 export default function Admin({
+  project,
   namespaces,
   authenticated = false,
   onCredentialSignIn = undefined,
@@ -51,7 +52,7 @@ export default function Admin({
           }}>
           <div className="cezembre-admin">
             <div className="namespaces-menu">
-              <Namespaces namespaces={currentNamespaces} />
+              <Namespaces project={project} namespaces={currentNamespaces} />
             </div>
 
             <div className="container">
@@ -83,6 +84,7 @@ export default function Admin({
     currentTitle,
     namespaces,
     onCredentialSignIn,
+    project,
     sections,
     title,
   ]);
