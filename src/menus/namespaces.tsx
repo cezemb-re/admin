@@ -1,10 +1,10 @@
-import { ReactElement, ReactNode } from 'react';
-import { Avatar, Button, Icon, IconName } from '@cezembre/ui';
+import { ReactElement } from 'react';
+import { Avatar, Button, IconName } from '@cezembre/ui';
 
 export interface Namespace {
   label: string;
   to: string;
-  icon?: IconName | ReactNode;
+  icon?: IconName;
 }
 
 export interface Props {
@@ -28,9 +28,8 @@ export default function Namespaces({ namespaces = [] }: Props): ReactElement {
                 <Button
                   buttonStyle="text"
                   theme="light"
-                  leftIcon={namespace.icon || IconName.DASHBOARD}
-                  to={namespace.to}
-                >
+                  leftIcon={namespace.icon || 'dashboard'}
+                  to={namespace.to}>
                   {namespace.label}
                 </Button>
               </div>
@@ -39,11 +38,7 @@ export default function Namespaces({ namespaces = [] }: Props): ReactElement {
       </section>
 
       <section className="footer">
-        <Button
-          buttonStyle="text"
-          theme="light"
-          leftIcon={<Icon name={IconName.ARROW} rotate={-90} size={15} />}
-        >
+        <Button buttonStyle="text" theme="light" leftIcon="arrow">
           Collapse
         </Button>
       </section>

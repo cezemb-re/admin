@@ -1,9 +1,6 @@
 import { MouseEvent, ReactElement, ReactNode, useEffect, useState } from 'react';
 import Auth, { Props as AuthProps } from './forms/auth';
-import Namespaces, {
-  Props as NamespacesProps,
-  Namespace,
-} from './menus/namespaces';
+import Namespaces, { Props as NamespacesProps, Namespace } from './menus/namespaces';
 import Header, { Props as HeaderProps, Section } from './menus/header';
 import adminContext from './context';
 import Contextual from './menus/contextual';
@@ -24,17 +21,13 @@ export default function Admin({
 }: Props): ReactElement | null {
   const [route, setRoute] = useState<ReactElement | null>(null);
 
-  const [currentNamespaces, setCurrentNamespaces] = useState<
-    Namespace[] | undefined
-  >(namespaces);
+  const [currentNamespaces, setCurrentNamespaces] = useState<Namespace[] | undefined>(namespaces);
 
   const [currentBackButton, setCurrentBackButton] = useState<
     ((event: MouseEvent<HTMLButtonElement>) => Promise<void> | void) | undefined
   >(() => backButton);
   const [currentTitle, setCurrentTitle] = useState<string | undefined>(title);
-  const [currentSections, setCurrentSections] = useState<Section[] | undefined>(
-    sections
-  );
+  const [currentSections, setCurrentSections] = useState<Section[] | undefined>(sections);
 
   useEffect(() => {
     if (!authenticated) {
@@ -55,8 +48,7 @@ export default function Admin({
             initialSections: sections,
             sections: currentSections,
             setSections: setCurrentSections,
-          }}
-        >
+          }}>
           <div className="cezembre-admin">
             <div className="namespaces-menu">
               <Namespaces namespaces={currentNamespaces} />
@@ -78,7 +70,7 @@ export default function Admin({
               <Contextual />
             </div>
           </div>
-        </adminContext.Provider>
+        </adminContext.Provider>,
       );
     }
   }, [

@@ -1,11 +1,5 @@
 import { ReactElement, useCallback, useState } from 'react';
-import {
-  Field,
-  Form,
-  FormErrors,
-  FormState,
-  getDefaultFormState,
-} from '@cezembre/forms';
+import { Field, Form, FormErrors, FormState, getDefaultFormState } from '@cezembre/forms';
 import validator from 'validator';
 import { Input, Button } from '@cezembre/ui';
 
@@ -18,11 +12,9 @@ export interface Props {
   onCredentialSignIn?: (credentials: Credentials) => Promise<void> | void;
 }
 
-export default function Auth({
-  onCredentialSignIn = undefined,
-}: Props): ReactElement {
+export default function Auth({ onCredentialSignIn = undefined }: Props): ReactElement {
   const [formState, setFormState] = useState<FormState<Credentials>>(
-    getDefaultFormState<Credentials>()
+    getDefaultFormState<Credentials>(),
   );
 
   const form = useCallback((formContext) => {
@@ -31,9 +23,7 @@ export default function Auth({
     }
   }, []);
 
-  const validate = useCallback((credentials: Credentials): FormErrors<
-    Credentials
-  > => {
+  const validate = useCallback((credentials: Credentials): FormErrors<Credentials> => {
     const errors: FormErrors<Credentials> = {};
 
     if (!credentials.email) {
@@ -59,8 +49,7 @@ export default function Auth({
           ref={form}
           onSubmit={onCredentialSignIn}
           validate={validate}
-          className="cezembre-ui-form credentials"
-        >
+          className="cezembre-ui-form credentials">
           <div className="field">
             <Field
               component={Input}

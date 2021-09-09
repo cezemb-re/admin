@@ -3,13 +3,8 @@ import Paragraph, { ParagraphFields, ParagraphState } from './paragraph';
 
 export interface Props {
   initialParagraphs?: ParagraphState[];
-  onCreateParagraph?: (
-    fields: ParagraphFields
-  ) => Promise<string | number> | string | number;
-  onChangeParagraph?: (
-    id: string | number,
-    fields: ParagraphFields
-  ) => Promise<void> | void;
+  onCreateParagraph?: (fields: ParagraphFields) => Promise<string | number> | string | number;
+  onChangeParagraph?: (id: string | number, fields: ParagraphFields) => Promise<void> | void;
   onDeleteParagraph?: (id: string | number) => Promise<boolean> | boolean;
 }
 
@@ -19,9 +14,7 @@ export default function Article({
   onChangeParagraph,
   onDeleteParagraph,
 }: Props): ReactElement {
-  const [paragraphs, setParagraphs] = useState<ParagraphState[]>(
-    initialParagraphs || []
-  );
+  const [paragraphs, setParagraphs] = useState<ParagraphState[]>(initialParagraphs || []);
 
   const createNewParagraph = useCallback((): ParagraphState => {
     return {
@@ -54,9 +47,7 @@ export default function Article({
         if (id && (typeof id === 'string' || typeof id === 'number')) {
           const nextParagraphs = [...paragraphs];
 
-          const index = nextParagraphs.findIndex(
-            ({ key }) => key === paragraph.key
-          );
+          const index = nextParagraphs.findIndex(({ key }) => key === paragraph.key);
           if (index !== -1) {
             nextParagraphs[index].id = id;
             nextParagraphs.push(createNewParagraph());
@@ -76,7 +67,7 @@ export default function Article({
         }
       }
     },
-    [createNewParagraph, onChangeParagraph, onCreateParagraph, paragraphs]
+    [createNewParagraph, onChangeParagraph, onCreateParagraph, paragraphs],
   );
 
   const deleteParagraph = useCallback(
@@ -99,9 +90,7 @@ export default function Article({
             setParagraphs((ps: ParagraphState[]) => {
               const nextParagraphs = [...ps];
 
-              const index = nextParagraphs.findIndex(
-                ({ key }) => key === paragraph.key
-              );
+              const index = nextParagraphs.findIndex(({ key }) => key === paragraph.key);
 
               if (index !== -1) {
                 nextParagraphs.splice(index, 1);
@@ -113,7 +102,7 @@ export default function Article({
         }
       })();
     },
-    [onDeleteParagraph]
+    [onDeleteParagraph],
   );
 
   return (
@@ -122,9 +111,7 @@ export default function Article({
         <div key={paragraph.key} className="paragraph">
           <Paragraph
             paragraph={paragraph}
-            onChange={(fields: ParagraphFields) =>
-              changeParagraph(paragraph, fields)
-            }
+            onChange={(fields: ParagraphFields) => changeParagraph(paragraph, fields)}
             onDelete={() => deleteParagraph(paragraph)}
           />
         </div>

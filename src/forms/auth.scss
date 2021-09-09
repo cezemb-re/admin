@@ -1,0 +1,78 @@
+@use "~@cezembre/fronts/dist/screens";
+@use "~@cezembre/ui/dist/fonts";
+@use "~@cezembre/ui/dist/colors";
+
+.cezembre-admin-forms-auth {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+
+  @include screens.tablet-S() {
+    flex-direction: column;
+  }
+
+  > .methods {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 30%;
+    height: 100%;
+    background: white;
+
+    @include screens.laptop-L() {
+      width: 40%;
+    }
+
+    @include screens.laptop() {
+      width: 50%;
+    }
+
+    @include screens.tablet() {
+      width: 60%;
+    }
+
+    @include screens.tablet-S() {
+      width: 100%;
+      height: 60%;
+    }
+
+    > h1 {
+      @include fonts.JetBrainsMono(1.1em);
+    }
+
+    > p {
+      @include fonts.JetBrainsMono(.9em, rgba(black, .4));
+      margin-top: 8px;
+    }
+
+    > .credentials {
+      margin-top: 50px;
+      width: 250px;
+    }
+  }
+
+  > .illustration {
+    width: 70%;
+    background: colors.$lead-light;
+
+    @include screens.laptop-L() {
+      width: 60%;
+    }
+
+    @include screens.laptop() {
+      width: 50%;
+    }
+
+    @include screens.tablet() {
+      width: 40%;
+    }
+
+    @include screens.tablet-S() {
+      width: 100%;
+      height: 40%;
+    }
+  }
+}

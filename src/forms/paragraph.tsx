@@ -1,6 +1,6 @@
 import { ReactElement, useCallback, useEffect, useState } from 'react';
 import { Field, Form, FormState, getDefaultFormState } from '@cezembre/forms';
-import { Icon, IconName, Wysiwyg } from '@cezembre/ui';
+import { Icon, Wysiwyg } from '@cezembre/ui';
 import { RawDraftContentState } from 'draft-js';
 
 export type Type = 'title' | 'text' | 'rich-text' | 'media';
@@ -26,18 +26,14 @@ export interface Props {
   paragraph: ParagraphState;
   onChange?: (
     paragraph: ParagraphFields,
-    changes: Partial<ParagraphFields>
+    changes: Partial<ParagraphFields>,
   ) => Promise<void> | void;
   onDelete?: () => void;
 }
 
-export default function Paragraph({
-  paragraph,
-  onChange,
-  onDelete,
-}: Props): ReactElement {
+export default function Paragraph({ paragraph, onChange, onDelete }: Props): ReactElement {
   const [formState, setFormState] = useState<FormState<ParagraphFields>>(
-    getDefaultFormState<ParagraphFields>()
+    getDefaultFormState<ParagraphFields>(),
   );
   const [empty, setEmpty] = useState<boolean>(true);
 
@@ -47,9 +43,7 @@ export default function Paragraph({
     }
   }, []);
 
-  const [classNames, setClassNames] = useState<string[]>([
-    'cezembre-admin-forms-paragraph',
-  ]);
+  const [classNames, setClassNames] = useState<string[]>(['cezembre-admin-forms-paragraph']);
 
   useEffect(() => {
     const nextClassNames: string[] = ['cezembre-admin-forms-paragraph'];
@@ -89,19 +83,15 @@ export default function Paragraph({
         await onChange(fields, changes);
       }
     },
-    [onChange]
+    [onChange],
   );
 
   return (
-    <Form<ParagraphFields>
-      ref={form}
-      className={classNames.join(' ')}
-      onChange={changeParagraph}
-    >
+    <Form<ParagraphFields> ref={form} className={classNames.join(' ')} onChange={changeParagraph}>
       <div className="contextual-menu">
         <Field<Type> name="type" initialValue={paragraph.type} type="hidden" />
         <button typeof="button" onClick={toggleContextualMenu}>
-          <Icon name={IconName.EDIT} />
+          <Icon name="edit" />
         </button>
       </div>
 

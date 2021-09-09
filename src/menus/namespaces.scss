@@ -1,3 +1,5 @@
+@use "~@cezembre/ui/dist/fonts";
+
 .cezembre-admin-menu-namespaces {
   display: flex;
   flex-direction: column;
@@ -13,10 +15,9 @@
     padding: 20px;
 
     > h1 {
-      @include JetBrainsMono(.9em);
+      @include fonts.JetBrainsMono(.9em);
       margin-left: 15px;
     }
-
   }
 
   > .body {
@@ -31,12 +32,9 @@
         margin: 0;
       }
     }
-
   }
 
   > .footer {
     padding: 20px;
-
   }
-
 }

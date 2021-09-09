@@ -15,15 +15,10 @@ export interface AdminContext {
   initialNamespaces?: Namespace[];
   namespaces?: Namespace[];
   setNamespaces?: Dispatch<SetStateAction<Namespace[] | undefined>>;
-  initialBackButton?: (
-    event: MouseEvent<HTMLButtonElement>
-  ) => Promise<void> | void;
+  initialBackButton?: (event: MouseEvent<HTMLButtonElement>) => Promise<void> | void;
   backButton?: (event: MouseEvent<HTMLButtonElement>) => Promise<void> | void;
   setBackButton?: Dispatch<
-    SetStateAction<
-      | ((event: MouseEvent<HTMLButtonElement>) => Promise<void> | void)
-      | undefined
-    >
+    SetStateAction<((event: MouseEvent<HTMLButtonElement>) => Promise<void> | void) | undefined>
   >;
   initialTitle?: string;
   title?: string;
@@ -58,9 +53,7 @@ export function useNamespaces(namespaces: Namespace[] | undefined): void {
 }
 
 export function useBackButton(
-  backButton:
-    | ((event: MouseEvent<HTMLButtonElement>) => Promise<void> | void)
-    | undefined
+  backButton: ((event: MouseEvent<HTMLButtonElement>) => Promise<void> | void) | undefined,
 ): void {
   const { initialBackButton, setBackButton } = useAdminContext();
   const memoizedBackButton = useRef<
@@ -75,8 +68,7 @@ export function useBackButton(
   }, [backButton, initialBackButton, setBackButton]);
 
   useEffect(() => {
-    return () =>
-      setBackButton ? setBackButton(() => initialBackButton) : undefined;
+    return () => (setBackButton ? setBackButton(() => initialBackButton) : undefined);
   }, [initialBackButton, setBackButton]);
 }
 

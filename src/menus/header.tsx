@@ -1,5 +1,5 @@
 import { MouseEvent, ReactElement } from 'react';
-import { Button, IconName } from '@cezembre/ui';
+import { Button } from '@cezembre/ui';
 import { useHistory } from 'react-router-dom';
 
 export interface Section {
@@ -13,11 +13,7 @@ export interface Props {
   sections?: Section[];
 }
 
-export default function Header({
-  backButton,
-  title,
-  sections,
-}: Props): ReactElement {
+export default function Header({ backButton, title, sections }: Props): ReactElement {
   const history = useHistory();
 
   return (
@@ -26,12 +22,7 @@ export default function Header({
 
       <div className="namespace">
         {backButton && history.length ? (
-          <Button
-            buttonStyle="link"
-            leftIcon={IconName.ARROW}
-            leftIconRotation={180}
-            onClick={backButton}
-          >
+          <Button buttonStyle="link" leftIcon="arrow" onClick={backButton}>
             Retour
           </Button>
         ) : null}

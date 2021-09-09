@@ -8,7 +8,6 @@
     height: 40px;
     opacity: 0;
     visibility: hidden;
-
   }
 
   > .content {
@@ -17,14 +16,10 @@
     &.rich-text {
       font-size: 1.2em;
     }
-
   }
 
   &.active.empty {
-
     > .contextual-menu {
     }
-
   }
-
 }
