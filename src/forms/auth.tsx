@@ -49,7 +49,7 @@ export default function Auth({ onCredentialSignIn = undefined }: Props): ReactEl
           ref={form}
           onSubmit={onCredentialSignIn}
           validate={validate}
-          className="cezembre-ui-form credentials">
+          className="credentials">
           <div className="field">
             <Field
               component={Input}

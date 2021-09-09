@@ -15,7 +15,7 @@ export default function App(): ReactElement {
   return (
     <div className="App">
       <BrowserRouter>
-        <Admin authenticated namespaces={namespaces} project="Example">
+        <Admin authenticated={false} namespaces={namespaces} project="Example">
           <Switch>
             <Route path="/" exact component={Dashboard} />
             <Route path="/articles" exact component={Articles} />

@@ -1,4 +1,5 @@
 @use "~@cezembre/fronts/dist/screens";
+@use "~@cezembre/ui/dist/forms";
 @use "~@cezembre/ui/dist/fonts";
 @use "~@cezembre/ui/dist/colors";
 
@@ -49,6 +50,7 @@
     }
 
     > .credentials {
+      @include forms.form();
       margin-top: 50px;
       width: 250px;
     }
