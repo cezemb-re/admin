@@ -18,11 +18,9 @@ export default function Header({ backButton, title, sections }: Props): ReactEle
 
   return (
     <div className="cezembre-admin-menus-header">
-      <div className="general" />
-
       <div className="namespace">
         {backButton && history.length ? (
-          <Button buttonStyle="link" leftIcon="arrow" onClick={backButton}>
+          <Button style="link" leftIcon="arrow-left" onClick={backButton}>
             Retour
           </Button>
         ) : null}
@@ -33,7 +31,7 @@ export default function Header({ backButton, title, sections }: Props): ReactEle
           <div className="sections">
             {sections.map((section: Section) => (
               <div className="section" key={section.to}>
-                <Button buttonStyle="link" to={section.to}>
+                <Button style="link" to={section.to}>
                   {section.label}
                 </Button>
               </div>

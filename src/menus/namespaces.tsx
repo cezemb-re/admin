@@ -25,11 +25,12 @@ export default function Namespaces({ project, namespaces = [] }: Props): ReactEl
       <section className="body">
         {namespaces
           ? namespaces.map((namespace: Namespace) => (
-              <div className="link" key={namespace.to}>
+              <div className="namespace" key={namespace.to}>
                 <Button
-                  buttonStyle="text"
-                  theme="light"
-                  leftIcon={namespace.icon || 'dashboard'}
+                  style="link"
+                  fullWidth
+                  shape="rounded"
+                  leftIcon={namespace.icon}
                   to={namespace.to}>
                   {namespace.label}
                 </Button>
@@ -39,9 +40,9 @@ export default function Namespaces({ project, namespaces = [] }: Props): ReactEl
       </section>
 
       <section className="footer">
-        <Button buttonStyle="text" theme="light" leftIcon="arrow">
-          Collapse
-        </Button>
+        {/*<Button buttonStyle="text" theme="light" leftIcon="arrow">*/}
+        {/*  Collapse*/}
+        {/*</Button>*/}
       </section>
     </div>
   );

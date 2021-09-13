@@ -10,12 +10,14 @@
 
   > .namespaces-menu {
     height: 100%;
+    width: 200px;
     background: colors.$background;
     @include borders.border();
   }
 
   > .container {
     flex: 1;
+    padding: 40px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -25,6 +27,7 @@
     }
 
     > .body {
+      margin-top: 30px;
       overflow: auto;
     }
   }

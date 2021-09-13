@@ -7,7 +7,7 @@ import Articles from './articles/list';
 import Article from './articles/page';
 
 const namespaces: Namespace[] = [
-  { label: 'Dashboard', to: '/' },
+  { label: 'Dashboard', to: '/', icon: 'activity' },
   { label: 'Articles', to: '/articles', icon: 'edit' },
 ];
 
@@ -15,7 +15,7 @@ export default function App(): ReactElement {
   return (
     <div className="App">
       <BrowserRouter>
-        <Admin authenticated={false} namespaces={namespaces} project="Example">
+        <Admin authenticated namespaces={namespaces} project="Example">
           <Switch>
             <Route path="/" exact component={Dashboard} />
             <Route path="/articles" exact component={Articles} />

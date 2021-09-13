@@ -1,6 +1,4 @@
 @use "~@cezembre/fronts/dist/containers";
 
 .articles-list {
-  @include containers.large();
-  margin-top: 30px;
 }

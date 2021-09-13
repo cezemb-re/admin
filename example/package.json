@@ -25,14 +25,14 @@
   "dependencies": {
     "@cezembre/admin": "file:../",
     "@cezembre/forms": "^1.6.2",
-    "@cezembre/ui": "^0.3.5",
+    "@cezembre/ui": "^0.5.0",
     "axios": "^0.21.4",
     "draft-js": "^0.11.7",
     "luxon": "^2.0.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "file:../node_modules/react",
+    "react-dom": "file:../node_modules/react-dom",
     "react-redux": "^7.2.5",
-    "react-router-dom": "^5.3.0",
+    "react-router-dom": "file:../node_modules/react-router-dom",
     "react-scripts": "^4.0.3",
     "redux": "^4.1.1",
     "validator": "^13.6.0",
@@ -41,9 +41,9 @@
   "devDependencies": {
     "@babel/core": "^7.15.5",
     "@babel/runtime": "^7.15.4",
-    "@craco/craco": "^6.2.0",
+    "@craco/craco": "^6.3.0",
     "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^12.0.0",
+    "@testing-library/react": "^12.1.0",
     "@testing-library/user-event": "^13.2.1",
     "@types/draft-js": "^0.11.5",
     "@types/luxon": "^2.0.3",
@@ -65,8 +65,8 @@
     "eslint-plugin-react": "^7.25.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "prettier": "^2.4.0",
-    "sass": "^1.39.0",
-    "typescript": "^4.4.2"
+    "sass": "^1.39.2",
+    "typescript": "^4.4.3"
   },
   "browserslist": {
     "production": [

@@ -22,10 +22,10 @@
 
   > .body {
     flex: 1;
-    overflow: auto;
+    //overflow: auto;
     padding: 30px 10px;
 
-    > .link {
+    > .namespace {
       margin-top: 10px;
 
       &:first-child {

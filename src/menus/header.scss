@@ -8,14 +8,7 @@
   justify-content: space-between;
   align-items: flex-start;
 
-  > .general {
-    width: 100%;
-    height: 50px;
-  }
-
   > .namespace {
-    @include containers.large();
-
     > h1 {
       @include fonts.JetBrainsMono(1.5em);
       margin-top: 10px;
