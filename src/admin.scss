@@ -17,17 +17,17 @@
 
   > .container {
     flex: 1;
-    padding: 40px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
 
     > .header {
+      padding: 40px;
     }
 
     > .body {
-      margin-top: 30px;
+      padding: 0 40px;
       overflow: auto;
     }
   }
