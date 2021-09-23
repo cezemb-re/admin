@@ -14,7 +14,7 @@ export interface Props {
 
 export default function Namespaces({ project, namespaces = [] }: Props): ReactElement {
   return (
-    <div className="cezembre-admin-menu-namespaces">
+    <div className="cezembre-admin-navigation-namespaces">
       <section className="header">
         <div className="avatar">
           <Avatar size="small" />

@@ -17,7 +17,7 @@ export default function Header({ backButton, title, sections }: Props): ReactEle
   const history = useHistory();
 
   return (
-    <div className="cezembre-admin-menus-header">
+    <div className="cezembre-admin-navigation-header">
       <div className="namespace">
         {backButton && history.length ? (
           <Button style="link" leftIcon="arrow-left" onClick={backButton}>

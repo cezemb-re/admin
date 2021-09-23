@@ -1,9 +1,8 @@
 import { MouseEvent, ReactElement, ReactNode, useEffect, useState } from 'react';
 import Auth, { Props as AuthProps } from './forms/auth';
-import Namespaces, { Props as NamespacesProps, Namespace } from './menus/namespaces';
-import Header, { Props as HeaderProps, Section } from './menus/header';
+import Namespaces, { Props as NamespacesProps, Namespace } from './navigation/namespaces';
+import Header, { Props as HeaderProps, Section } from './navigation/header';
 import adminContext from './context';
-import Contextual from './menus/contextual';
 
 export interface Props extends AuthProps, NamespacesProps, HeaderProps {
   authenticated?: boolean;
@@ -30,6 +29,8 @@ export default function Admin({
   const [currentTitle, setCurrentTitle] = useState<string | undefined>(title);
   const [currentSections, setCurrentSections] = useState<Section[] | undefined>(sections);
 
+  const [properties, setProperties] = useState<ReactNode | undefined>();
+
   useEffect(() => {
     if (!authenticated) {
       setRoute(<Auth onCredentialSignIn={onCredentialSignIn} />);
@@ -49,6 +50,8 @@ export default function Admin({
             initialSections: sections,
             sections: currentSections,
             setSections: setCurrentSections,
+            properties,
+            setProperties,
           }}>
           <div className="cezembre-admin">
             <div className="namespaces-menu">
@@ -67,14 +70,13 @@ export default function Admin({
               <div className="body">{children}</div>
             </div>
 
-            <div className="contextual-menu">
-              <Contextual />
-            </div>
+            <div className={`properties${properties ? ' active' : ''}`}>{properties}</div>
           </div>
         </adminContext.Provider>,
       );
     }
   }, [
+    properties,
     authenticated,
     backButton,
     children,

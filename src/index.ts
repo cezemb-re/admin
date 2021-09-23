@@ -7,18 +7,28 @@ import adminContext, {
   useSections,
   useTitle,
   useBackButton,
+  useProperties,
 } from './context';
 
 import AuthForm, { Credentials } from './forms/auth';
 import ArticleForm from './forms/article';
 import { ParagraphFields, Type as ParagraphType, Size as ParagraphSize } from './forms/paragraph';
-import { Namespace } from './menus/namespaces';
+import Properties from './navigation/properties';
+import { Namespace } from './navigation/namespaces';
 
 /**
  * Context
  */
 
-export { adminContext, useAdminContext, useNamespaces, useSections, useTitle, useBackButton };
+export {
+  adminContext,
+  useAdminContext,
+  useNamespaces,
+  useSections,
+  useTitle,
+  useBackButton,
+  useProperties,
+};
 
 export type { AdminContext };
 
@@ -31,8 +41,10 @@ export type { Credentials, ParagraphFields, ParagraphSize, ParagraphType };
 export { AuthForm, ArticleForm };
 
 /**
- * Menus
+ * Navigation
  */
+
+export { Properties };
 
 export type { Namespace };
 

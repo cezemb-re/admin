@@ -6,10 +6,11 @@ import {
   useContext,
   useEffect,
   useRef,
+  ReactNode,
 } from 'react';
 import _ from 'lodash';
-import { Namespace } from './menus/namespaces';
-import { Section } from './menus/header';
+import { Namespace } from './navigation/namespaces';
+import { Section } from './navigation/header';
 
 export interface AdminContext {
   initialNamespaces?: Namespace[];
@@ -26,6 +27,8 @@ export interface AdminContext {
   initialSections?: Section[];
   sections?: Section[];
   setSections?: Dispatch<SetStateAction<Section[] | undefined>>;
+  properties?: ReactNode;
+  setProperties?: Dispatch<SetStateAction<ReactNode | undefined>>;
 }
 
 const adminContext = createContext<AdminContext>({});
@@ -102,4 +105,18 @@ export function useSections(sections: Section[] | undefined): void {
   useEffect(() => {
     return () => (setSections ? setSections(initialSections) : undefined);
   }, [initialSections, setSections]);
+}
+
+export function useProperties(properties: ReactNode | undefined): void {
+  const { setProperties } = useAdminContext();
+
+  useEffect(() => {
+    if (setProperties) {
+      setProperties(properties);
+    }
+  }, [properties, setProperties]);
+
+  useEffect(() => {
+    return () => (setProperties ? setProperties(undefined) : undefined);
+  }, [setProperties]);
 }
