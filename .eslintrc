@@ -14,9 +14,11 @@
     "node": true
   },
   "extends": [
+    "airbnb",
     "airbnb-typescript",
     "airbnb/hooks",
     "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "prettier",
     "plugin:prettier/recommended"
   ],
@@ -34,7 +36,10 @@
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
     "import/extensions": "off",
-    "import/no-extraneous-dependencies": "off"
+    "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": "off",
+    "@typescript-eslint/no-floating-promises": "off",
+    "no-nested-ternary": "off"
   },
   "globals": {
     "Atomics": "readonly",

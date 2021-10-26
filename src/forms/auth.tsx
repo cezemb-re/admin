@@ -1,9 +1,17 @@
 import { ReactElement, useCallback, useState } from 'react';
-import { Field, Form, FormErrors, FormState, getDefaultFormState } from '@cezembre/forms';
+import {
+  Field,
+  Form,
+  FormContext,
+  FormErrors,
+  FormFields,
+  FormState,
+  getDefaultFormState,
+} from '@cezembre/forms';
 import validator from 'validator';
 import { Input, Button } from '@cezembre/ui';
 
-export interface Credentials {
+export interface Credentials extends FormFields {
   email?: string;
   password?: string;
 }
@@ -17,7 +25,7 @@ export default function Auth({ onCredentialSignIn = undefined }: Props): ReactEl
     getDefaultFormState<Credentials>(),
   );
 
-  const form = useCallback((formContext) => {
+  const form = useCallback((formContext: FormContext<Credentials>) => {
     if (formContext) {
       setFormState(formContext.formState);
     }

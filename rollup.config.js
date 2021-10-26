@@ -4,23 +4,29 @@ import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import { terser } from 'rollup-plugin-terser';
 import postcss from 'rollup-plugin-postcss';
-import typescript from 'rollup-plugin-typescript2';
+import typescript from '@rollup/plugin-typescript';
 import image from '@rollup/plugin-image';
 import json from '@rollup/plugin-json';
 import copy from 'rollup-plugin-copy';
 import autoprefixer from 'autoprefixer';
+import postcssUrl from 'postcss-url';
 import pkg from './package.json';
 
 const { dependencies = {}, peerDependencies = {} } = pkg;
 
 const externals = [...Object.keys(dependencies), ...Object.keys(peerDependencies)];
 
+const src = path.resolve(__dirname, 'src');
+const input = path.resolve(src, 'index.ts');
+const assets = path.resolve(src, 'assets');
+const dest = path.resolve(__dirname, 'dist');
+
 export default [
   {
-    input: path.resolve(__dirname, 'src/index.ts'),
+    input,
     external: (id) => externals.some((dep) => id === dep || id.startsWith(`${dep}/`)),
     plugins: [
-      typescript(),
+      typescript({ tsconfig: './tsconfig.json' }),
       commonjs(),
       json(),
       resolve({ browser: true }),
@@ -29,12 +35,18 @@ export default [
       }),
       image(),
       postcss({
-        plugins: [autoprefixer],
+        plugins: [
+          autoprefixer,
+          postcssUrl({
+            url: 'inline',
+            basePath: assets,
+          }),
+        ],
       }),
       copy({
         targets: [
-          { src: 'src/**/_*.scss.d.ts', dest: path.resolve(__dirname, 'dist') },
-          { src: 'src/**/_*.scss', dest: path.resolve(__dirname, 'dist') },
+          { src: 'src/**/_*.scss.d.ts', dest },
+          { src: 'src/**/_*.scss', dest },
         ],
       }),
     ],
