@@ -1,15 +1,14 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement } from 'react';
 import { Table, Selection } from '@cezembre/ui';
-import { useTitle, useProperties } from '@cezembre/admin';
+import { useHistory } from 'react-router-dom';
+import { useTitle } from '@cezembre/admin';
 import Article from './model';
 import articles from './data';
 
 export default function List(): ReactElement {
-  const [selection, setSelection] = useState<Selection>();
-
   useTitle('Articles');
 
-  useProperties(selection);
+  const history = useHistory();
 
   return (
     <div className="articles-list">
@@ -19,7 +18,9 @@ export default function List(): ReactElement {
           { key: 'description', label: 'Description' },
         ]}
         data={articles}
-        onSelectItem={setSelection}
+        onSelectItem={(item: Selection) =>
+          typeof item === 'string' ? history.push(`/articles/${item}`) : undefined
+        }
       />
     </div>
   );

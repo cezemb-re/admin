@@ -16,8 +16,7 @@ export default function Page(): ReactElement | null {
 
   const article = articles.find(({ id }) => id === params.article);
 
-  useBackButton(history.goBack);
-  // useTitle('Article');
+  useTitle('Article');
   useSections([
     { label: 'Overview', to: `/articles/${params.article}` },
     { label: 'Details', to: `/articles/${params.article}/details` },

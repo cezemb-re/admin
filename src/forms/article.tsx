@@ -31,43 +31,36 @@ export default function Article({
   }, [createNewParagraph, paragraphs]);
 
   const changeParagraph = useCallback(
-    async (paragraph: ParagraphState, fields: ParagraphFields) => {
-      if (!paragraph.id && onCreateParagraph) {
-        let id = onCreateParagraph(fields);
-        if (
-          id &&
-          typeof id === 'object' &&
-          'then' in id &&
-          id.then &&
-          typeof id.then === 'function'
-        ) {
-          id = await id;
-        }
+    (paragraph: ParagraphState, fields: ParagraphFields) => {
+      (async () => {
+        if (!paragraph.id && onCreateParagraph) {
+          let id = onCreateParagraph(fields);
+          if (id && typeof id === 'object' && id.then && typeof id.then === 'function') {
+            id = await id;
+          }
 
-        if (id && (typeof id === 'string' || typeof id === 'number')) {
-          const nextParagraphs = [...paragraphs];
+          if (id && (typeof id === 'string' || typeof id === 'number')) {
+            setParagraphs((ps: ParagraphState[]) => {
+              const nextParagraphs = [...ps];
 
-          const index = nextParagraphs.findIndex(({ key }) => key === paragraph.key);
-          if (index !== -1) {
-            nextParagraphs[index].id = id;
-            nextParagraphs.push(createNewParagraph());
-            setParagraphs(nextParagraphs);
+              const index = nextParagraphs.findIndex(({ key }) => key === paragraph.key);
+              if (index !== -1 && id && (typeof id === 'string' || typeof id === 'number')) {
+                nextParagraphs[index].id = id;
+                nextParagraphs.push(createNewParagraph());
+              }
+
+              return nextParagraphs;
+            });
+          }
+        } else if (paragraph.id && onChangeParagraph) {
+          const res = onChangeParagraph(paragraph.id, fields);
+          if (res && typeof res === 'object' && res.then && typeof res.then === 'function') {
+            await res;
           }
         }
-      } else if (paragraph.id && onChangeParagraph) {
-        const res = onChangeParagraph(paragraph.id, fields);
-        if (
-          res &&
-          typeof res === 'object' &&
-          'then' in res &&
-          res.then &&
-          typeof res.then === 'function'
-        ) {
-          await res;
-        }
-      }
+      })();
     },
-    [createNewParagraph, onChangeParagraph, onCreateParagraph, paragraphs],
+    [createNewParagraph, onChangeParagraph, onCreateParagraph],
   );
 
   const deleteParagraph = useCallback(
@@ -79,7 +72,6 @@ export default function Article({
           if (
             doDelete &&
             typeof doDelete === 'object' &&
-            'then' in doDelete &&
             doDelete.then &&
             typeof doDelete.then === 'function'
           ) {

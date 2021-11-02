@@ -20,7 +20,7 @@ export interface ParagraphState {
   type?: Type;
   size?: Size;
   style?: string | null;
-  content?: string | RawDraftContentState | null;
+  content?: string | RawDraftContentState;
 }
 
 export interface ParagraphFields extends FormFields {
@@ -45,7 +45,7 @@ export default function Paragraph({ paragraph, onChange, onDelete }: Props): Rea
   const [empty, setEmpty] = useState<boolean>(true);
 
   const form = useCallback((formContext: FormContext<ParagraphFields>) => {
-    if (formContext) {
+    if (formContext?.formState) {
       setFormState(formContext.formState);
     }
   }, []);
@@ -85,10 +85,15 @@ export default function Paragraph({ paragraph, onChange, onDelete }: Props): Rea
   const toggleContextualMenu = useCallback(() => {}, []);
 
   const changeParagraph = useCallback(
-    async (fields: ParagraphFields, changes?: Partial<ParagraphFields>) => {
-      if (onChange) {
-        await onChange(fields, changes);
-      }
+    (fields: ParagraphFields, changes?: Partial<ParagraphFields>) => {
+      (async () => {
+        if (onChange) {
+          const change = onChange(fields, changes);
+          if (typeof change === 'object' && change.then && typeof change.then === 'function') {
+            await change;
+          }
+        }
+      })();
     },
     [onChange],
   );
@@ -102,10 +107,10 @@ export default function Paragraph({ paragraph, onChange, onDelete }: Props): Rea
         </button>
       </div>
 
-      <div className={`content ${paragraph.type || ''}`}>
+      <div className={`content${paragraph.type ? ` ${paragraph.type}` : ''}`}>
         <Field
           component={Wysiwyg}
-          initialValue={paragraph.content || ''}
+          initialValue={paragraph.content}
           name="content"
           type="paragraph"
           placeholder="Votre texte ici ..."
