@@ -1,6 +1,5 @@
 import {
   createContext,
-  MouseEvent,
   Dispatch,
   SetStateAction,
   useContext,
@@ -16,11 +15,9 @@ export interface AdminContext {
   initialNamespaces?: Namespace[];
   namespaces?: Namespace[];
   setNamespaces?: Dispatch<SetStateAction<Namespace[] | undefined>>;
-  initialBackButton?: (event: MouseEvent<HTMLButtonElement>) => Promise<void> | void;
-  backButton?: (event: MouseEvent<HTMLButtonElement>) => Promise<void> | void;
-  setBackButton?: Dispatch<
-    SetStateAction<((event: MouseEvent<HTMLButtonElement>) => Promise<void> | void) | undefined>
-  >;
+  initialShowBackButton?: boolean;
+  showBackButton?: boolean;
+  setShowBackButton?: Dispatch<SetStateAction<boolean | undefined>>;
   initialTitle?: string;
   title?: string;
   setTitle?: Dispatch<SetStateAction<string | undefined>>;
@@ -39,7 +36,7 @@ export function useAdminContext(): AdminContext {
 
 export default adminContext;
 
-export function useNamespaces(namespaces: Namespace[] | undefined): void {
+export function useNamespaces(namespaces?: Namespace[]): void {
   const { initialNamespaces, setNamespaces } = useAdminContext();
   const memoizedNamespaces = useRef<Section[] | undefined>();
 
@@ -55,24 +52,21 @@ export function useNamespaces(namespaces: Namespace[] | undefined): void {
   }, [initialNamespaces, setNamespaces]);
 }
 
-export function useBackButton(
-  backButton: ((event: MouseEvent<HTMLButtonElement>) => Promise<void> | void) | undefined,
-): void {
-  const { initialBackButton, setBackButton } = useAdminContext();
-  const memoizedBackButton = useRef<
-    ((event: MouseEvent<HTMLButtonElement>) => Promise<void> | void) | undefined
-  >();
+export function useBackButton(showBackButton?: boolean): void {
+  const { initialShowBackButton, setShowBackButton } = useAdminContext();
+  const memoizedShowBackButton = useRef<boolean | undefined>();
 
   useEffect(() => {
-    if (!_.isEqual(memoizedBackButton.current, backButton) && setBackButton) {
-      setBackButton(() => backButton);
-      memoizedBackButton.current = backButton;
+    if (!_.isEqual(memoizedShowBackButton.current, showBackButton) && setShowBackButton) {
+      setShowBackButton(() => showBackButton);
+      memoizedShowBackButton.current = showBackButton;
     }
-  }, [backButton, initialBackButton, setBackButton]);
+  }, [showBackButton, initialShowBackButton, setShowBackButton]);
 
   useEffect(() => {
-    return () => (setBackButton ? setBackButton(() => initialBackButton) : undefined);
-  }, [initialBackButton, setBackButton]);
+    return () =>
+      setShowBackButton !== undefined ? setShowBackButton(initialShowBackButton) : undefined;
+  }, [initialShowBackButton, setShowBackButton]);
 }
 
 export function useTitle(title: string | undefined): void {

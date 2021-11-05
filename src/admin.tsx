@@ -1,4 +1,4 @@
-import { MouseEvent, ReactElement, ReactNode, useEffect, useState } from 'react';
+import { ReactElement, ReactNode, useEffect, useState } from 'react';
 import Auth, { Props as AuthProps } from './forms/auth';
 import Namespaces, { Props as NamespacesProps, Namespace } from './navigation/namespaces';
 import Header, { Props as HeaderProps, Section } from './navigation/header';
@@ -14,7 +14,7 @@ export default function Admin({
   namespaces,
   authenticated = false,
   onCredentialSignIn = undefined,
-  backButton,
+  showBackButton,
   title,
   sections,
   children,
@@ -23,9 +23,9 @@ export default function Admin({
 
   const [currentNamespaces, setCurrentNamespaces] = useState<Namespace[] | undefined>(namespaces);
 
-  const [currentBackButton, setCurrentBackButton] = useState<
-    ((event: MouseEvent<HTMLButtonElement>) => Promise<void> | void) | undefined
-  >(() => backButton);
+  const [currentShowBackButton, setCurrentShowBackButton] = useState<boolean | undefined>(
+    () => showBackButton,
+  );
   const [currentTitle, setCurrentTitle] = useState<string | undefined>(title);
   const [currentSections, setCurrentSections] = useState<Section[] | undefined>(sections);
 
@@ -41,9 +41,9 @@ export default function Admin({
             initialNamespaces: namespaces,
             namespaces: currentNamespaces,
             setNamespaces: setCurrentNamespaces,
-            initialBackButton: backButton,
-            backButton: currentBackButton,
-            setBackButton: setCurrentBackButton,
+            initialShowBackButton: showBackButton,
+            showBackButton: currentShowBackButton,
+            setShowBackButton: setCurrentShowBackButton,
             initialTitle: title,
             title: currentTitle,
             setTitle: setCurrentTitle,
@@ -61,7 +61,7 @@ export default function Admin({
             <div className="container">
               <div className="header">
                 <Header
-                  backButton={currentBackButton}
+                  showBackButton={currentShowBackButton}
                   title={currentTitle}
                   sections={currentSections}
                 />
@@ -78,9 +78,9 @@ export default function Admin({
   }, [
     properties,
     authenticated,
-    backButton,
+    showBackButton,
     children,
-    currentBackButton,
+    currentShowBackButton,
     currentNamespaces,
     currentSections,
     currentTitle,

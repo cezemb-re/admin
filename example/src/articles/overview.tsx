@@ -5,7 +5,9 @@ import Article from './model';
 
 export interface Props {
   article: Article;
-  onCreateParagraph?: (paragraph?: Paragraph) => Promise<void> | void;
+  onCreateParagraph?: (fields: ParagraphFields) => Promise<string | number> | string | number;
+  onChangeParagraph?: (id: string | number, fields: ParagraphFields) => Promise<void> | void;
+  onDeleteParagraph?: (id: string | number) => Promise<boolean> | boolean;
 }
 
 enum Size {
@@ -33,48 +35,16 @@ interface Paragraph {
   position?: number;
 }
 
-export default function Overview({ article }: Props): ReactElement {
-  const [paragraphs, setParagraphs] = useState<Paragraph[]>([]);
-
-  const deleteParagraph = useCallback((id: string | number): Promise<boolean> => {
-    return new Promise((resolve) => {
-      setTimeout(() => resolve(true), 500);
-    });
-  }, []);
-
-  const onCreateParagraph = useCallback(
-    (fields: ParagraphFields): Promise<string> => {
-      return new Promise((resolve) => {
-        const id = Math.random().toString(36).substr(2, 10);
-        setTimeout(() => {
-          setParagraphs((ps) => {
-            return [
-              ...ps,
-              {
-                id,
-                article: article.id,
-                type: Type.richText,
-                size: Size.auto,
-                content: fields.content,
-                position: 0,
-              },
-            ];
-          });
-          resolve(id);
-        }, 1000);
-      });
-    },
-    [article.id],
-  );
-
-  const onChangeParagraph = useCallback((id: string | number, fields: ParagraphFields) => {
-    console.log('Change paragraph', id);
-  }, []);
-
+export default function Overview({
+  article,
+  onCreateParagraph,
+  onChangeParagraph,
+  onDeleteParagraph,
+}: Props): ReactElement {
   return (
     <div className="articles-overview">
       <ArticleForm
-        initialParagraphs={paragraphs.map((paragraph: Paragraph, index) => ({
+        initialParagraphs={article.paragraphs?.map((paragraph: Paragraph, index) => ({
           key: paragraph.id || index.toString(10),
           id: paragraph.id,
           content: paragraph.content,
@@ -83,12 +53,8 @@ export default function Overview({ article }: Props): ReactElement {
         }))}
         onCreateParagraph={onCreateParagraph}
         onChangeParagraph={onChangeParagraph}
-        onDeleteParagraph={deleteParagraph}
+        onDeleteParagraph={onDeleteParagraph}
       />
-
-      {paragraphs.map((p) => (
-        <p key={p.id}>{p.id}</p>
-      ))}
     </div>
   );
 }

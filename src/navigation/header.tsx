@@ -1,6 +1,6 @@
-import { MouseEvent, ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { Button } from '@cezembre/ui';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export interface Section {
   label: string;
@@ -8,19 +8,19 @@ export interface Section {
 }
 
 export interface Props {
-  backButton?: (event: MouseEvent<HTMLButtonElement>) => Promise<void> | void;
+  showBackButton?: boolean;
   title?: string;
   sections?: Section[];
 }
 
-export default function Header({ backButton, title, sections }: Props): ReactElement {
-  const history = useHistory();
+export default function Header({ showBackButton, title, sections }: Props): ReactElement {
+  const navigate = useNavigate();
 
   return (
     <div className="cezembre-admin-navigation-header">
       <div className="namespace">
-        {backButton && history.length ? (
-          <Button styleType="link" leftIcon="arrow-left" onClick={backButton}>
+        {showBackButton ? (
+          <Button styleType="link" leftIcon="arrow-left" onClick={() => navigate(-1)}>
             Retour
           </Button>
         ) : null}
