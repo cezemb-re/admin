@@ -41,11 +41,11 @@
     }
 
     > h1 {
-      @include fonts.JetBrainsMono(1.1em);
+      @include fonts.JetBrainsMono(1em);
     }
 
     > p {
-      @include fonts.JetBrainsMono(.9em, rgba(black, .4));
+      @include fonts.JetBrainsMono(.8em, rgba(black, .4));
       margin-top: 8px;
     }
 

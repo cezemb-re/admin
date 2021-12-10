@@ -15,14 +15,13 @@
     padding: 20px;
 
     > h1 {
-      @include fonts.JetBrainsMono(.9em);
+      @include fonts.JetBrainsMono(.8em);
       margin-left: 15px;
     }
   }
 
   > .body {
     flex: 1;
-    //overflow: auto;
     padding: 30px 10px;
 
     > .namespace {
