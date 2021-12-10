@@ -1,10 +1,9 @@
-import { ReactElement, useCallback, useEffect, useState } from 'react';
-import { useParams, useHistory, Switch, Route, useRouteMatch } from 'react-router-dom';
-import { useBackButton, useTitle, useSections } from '@cezembre/admin';
+import { ReactElement, useCallback, useState } from 'react';
+import { useParams, Routes, Route } from 'react-router-dom';
+import { useBackButton, useTitle, useSections, ParagraphFields } from '@cezembre/admin';
 import Overview from './overview';
 import Details from './details';
 import Article from './model';
-import { ParagraphFields } from '../../../src';
 import Paragraph from './paragraphs/model';
 
 export interface Params {
@@ -12,9 +11,9 @@ export interface Params {
 }
 
 export default function Page(): ReactElement | null {
-  const history = useHistory();
-  const params = useParams<Params>();
-  const { path } = useRouteMatch();
+  const params = useParams<'article'>();
+
+  useBackButton(true);
 
   const [article, setArticle] = useState<Article>({
     id: 'yes',
@@ -62,14 +61,13 @@ export default function Page(): ReactElement | null {
 
   return (
     <div className="articles-page">
-      <Switch>
-        <Route path={`${path}/`} exact>
-          <Overview article={article} onCreateParagraph={createParagraph} />
-        </Route>
-        <Route path={`${path}/details`} exact>
-          <Details article={article} />
-        </Route>
-      </Switch>
+      <Routes>
+        <Route
+          path="/"
+          element={<Overview article={article} onCreateParagraph={createParagraph} />}
+        />
+        <Route path="/details" element={<Details article={article} />} />
+      </Routes>
     </div>
   );
 }

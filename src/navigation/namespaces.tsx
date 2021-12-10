@@ -27,7 +27,7 @@ export default function Namespaces({ project, namespaces = [] }: Props): ReactEl
           ? namespaces.map((namespace: Namespace) => (
               <div className="namespace" key={namespace.to}>
                 <Button
-                  styleType="link"
+                  styleType="namespace"
                   fullWidth
                   shape="rounded"
                   leftIcon={namespace.icon}
