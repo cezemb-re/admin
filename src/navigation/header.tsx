@@ -20,7 +20,7 @@ export default function Header({ showBackButton, title, sections }: Props): Reac
     <div className="cezembre-admin-navigation-header">
       <div className="namespace">
         {showBackButton ? (
-          <Button styleType="link" leftIcon="arrow-left" onClick={() => navigate(-1)}>
+          <Button leftIcon="arrow-left" onClick={() => navigate(-1)}>
             Retour
           </Button>
         ) : null}
@@ -31,9 +31,7 @@ export default function Header({ showBackButton, title, sections }: Props): Reac
           <div className="sections">
             {sections.map((section: Section) => (
               <div className="section" key={section.to}>
-                <Button styleType="link" to={section.to}>
-                  {section.label}
-                </Button>
+                <Button to={section.to}>{section.label}</Button>
               </div>
             ))}
           </div>
